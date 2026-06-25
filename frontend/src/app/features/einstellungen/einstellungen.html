@@ -1,0 +1,42 @@
+<h1>Einstellungen</h1>
+<p class="hinweis">
+  Zielwerte (z.&nbsp;B. „Ziel-EBIT-Marge %", „Ziel-Liquidität %") steuern unmittelbar die
+  Ampel-Bewertung in den Kennzahlen und im Mandantenbericht.
+</p>
+
+<mat-card>
+  <mat-card-content class="scroll">
+    <table mat-table [dataSource]="einstellungen()">
+      <ng-container matColumnDef="schluessel">
+        <th mat-header-cell *matHeaderCellDef>Parameter</th>
+        <td mat-cell *matCellDef="let e">{{ e.schluessel }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="wert">
+        <th mat-header-cell *matHeaderCellDef>Wert</th>
+        <td mat-cell *matCellDef="let e">
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <input matInput [(ngModel)]="e.wert" (keyup.enter)="speichere(e)" />
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="beschreibung">
+        <th mat-header-cell *matHeaderCellDef>Beschreibung</th>
+        <td mat-cell *matCellDef="let e" class="beschreibung">{{ e.beschreibung }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="aktion">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let e">
+          <button mat-icon-button color="primary" (click)="speichere(e)" aria-label="Speichern">
+            <mat-icon>{{ gespeichert() === e.schluessel ? 'check' : 'save' }}</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="spalten"></tr>
+      <tr mat-row *matRowDef="let row; columns: spalten"></tr>
+    </table>
+  </mat-card-content>
+</mat-card>

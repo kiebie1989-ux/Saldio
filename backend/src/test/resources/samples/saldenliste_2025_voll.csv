@@ -1,0 +1,123 @@
+Monat;Mandant;Konto;Kontobezeichnung;Betrag;Kostenstelle
+2025-01;Mustermann GmbH;8000;Umsatzerlöse 19%;92.300,00;Vertrieb
+2025-01;Mustermann GmbH;3000;Wareneinkauf 19%;31.000,00;Einkauf
+2025-01;Mustermann GmbH;4100;Löhne und Gehälter;22.000,00;Personal
+2025-01;Mustermann GmbH;4830;EDV-Kosten & Software;8.500,00;IT
+2025-01;Mustermann GmbH;4210;Miete & Pacht;4.200,00;Verwaltung
+2025-01;Mustermann GmbH;4600;Werbekosten;2.800,00;Marketing
+2025-01;Mustermann GmbH;4900;Sonstige Betriebskosten;1.770,00;Verwaltung
+2025-01;Mustermann GmbH;1200;Bank (Girokonto);24.000,00;Finance
+2025-01;Mustermann GmbH;1400;Forderungen aus LuL;45.000,00;Finance
+2025-01;Mustermann GmbH;1600;Verbindlichkeiten LuL;18.500,00;Finance
+2025-02;Mustermann GmbH;8000;Umsatzerlöse 19%;95.550,00;Vertrieb
+2025-02;Mustermann GmbH;3000;Wareneinkauf 19%;32.000,00;Einkauf
+2025-02;Mustermann GmbH;4100;Löhne und Gehälter;22.000,00;Personal
+2025-02;Mustermann GmbH;4830;EDV-Kosten & Software;9.200,00;IT
+2025-02;Mustermann GmbH;4210;Miete & Pacht;4.200,00;Verwaltung
+2025-02;Mustermann GmbH;4900;Sonstige Betriebskosten;6.065,00;Verwaltung
+2025-09;Mustermann GmbH;8000;Umsatzerlöse 19%;107.070,00;Vertrieb
+2025-09;Mustermann GmbH;3000;Wareneinkauf 19%;36.000,00;Einkauf
+2025-09;Mustermann GmbH;4100;Löhne und Gehälter;23.500,00;Personal
+2025-09;Mustermann GmbH;4830;EDV-Kosten & Software;11.200,00;IT
+2025-09;Mustermann GmbH;4210;Miete & Pacht;4.500,00;Verwaltung
+2025-09;Mustermann GmbH;4600;Werbekosten;4.100,00;Marketing
+2025-09;Mustermann GmbH;4900;Sonstige Betriebskosten;5.660,00;Verwaltung
+2025-09;Beispiel Handel GmbH;8000;Umsatzerlöse 19%;102.000,00;Vertrieb
+2025-09;Beispiel Handel GmbH;3000;Wareneinkauf 19%;61.200,00;Einkauf
+2025-09;Beispiel Handel GmbH;4100;Löhne und Gehälter;28.000,00;Personal
+2025-03;Mustermann GmbH;8000;Umsatzerlöse 19%;100.100,00;Vertrieb
+2025-03;Mustermann GmbH;3000;Wareneinkauf 19%;33.500,00;Einkauf
+2025-03;Mustermann GmbH;4100;Löhne und Gehälter;22.500,00;Personal
+2025-03;Mustermann GmbH;4210;Miete & Pacht;4.250,00;Verwaltung
+2025-03;Mustermann GmbH;4830;EDV-Kosten & Software;9.500,00;IT
+2025-03;Mustermann GmbH;4600;Werbekosten;3.100,00;Marketing
+2025-03;Mustermann GmbH;4900;Sonstige Betriebskosten;6.080,00;Verwaltung
+2025-04;Mustermann GmbH;8000;Umsatzerlöse 19%;93.780,00;Vertrieb
+2025-04;Mustermann GmbH;3000;Wareneinkauf 19%;32.000,00;Einkauf
+2025-04;Mustermann GmbH;4100;Löhne und Gehälter;22.000,00;Personal
+2025-04;Mustermann GmbH;4210;Miete & Pacht;4.300,00;Verwaltung
+2025-04;Mustermann GmbH;4830;EDV-Kosten & Software;9.800,00;IT
+2025-04;Mustermann GmbH;4600;Werbekosten;3.300,00;Marketing
+2025-04;Mustermann GmbH;4900;Sonstige Betriebskosten;1.032,00;Verwaltung
+2025-05;Mustermann GmbH;8000;Umsatzerlöse 19%;100.300,00;Vertrieb
+2025-05;Mustermann GmbH;3000;Wareneinkauf 19%;34.000,00;Einkauf
+2025-05;Mustermann GmbH;4100;Löhne und Gehälter;22.500,00;Personal
+2025-05;Mustermann GmbH;4210;Miete & Pacht;4.300,00;Verwaltung
+2025-05;Mustermann GmbH;4830;EDV-Kosten & Software;10.000,00;IT
+2025-05;Mustermann GmbH;4600;Werbekosten;3.500,00;Marketing
+2025-05;Mustermann GmbH;4900;Sonstige Betriebskosten;4.608,00;Verwaltung
+2025-06;Mustermann GmbH;8000;Umsatzerlöse 19%;103.600,00;Vertrieb
+2025-06;Mustermann GmbH;3000;Wareneinkauf 19%;35.000,00;Einkauf
+2025-06;Mustermann GmbH;4100;Löhne und Gehälter;23.000,00;Personal
+2025-06;Mustermann GmbH;4210;Miete & Pacht;4.400,00;Verwaltung
+2025-06;Mustermann GmbH;4830;EDV-Kosten & Software;10.300,00;IT
+2025-06;Mustermann GmbH;4600;Werbekosten;3.600,00;Marketing
+2025-06;Mustermann GmbH;4900;Sonstige Betriebskosten;5.565,00;Verwaltung
+2025-07;Mustermann GmbH;8000;Umsatzerlöse 19%;101.190,00;Vertrieb
+2025-07;Mustermann GmbH;3000;Wareneinkauf 19%;34.500,00;Einkauf
+2025-07;Mustermann GmbH;4100;Löhne und Gehälter;22.500,00;Personal
+2025-07;Mustermann GmbH;4210;Miete & Pacht;4.400,00;Verwaltung
+2025-07;Mustermann GmbH;4830;EDV-Kosten & Software;10.600,00;IT
+2025-07;Mustermann GmbH;4600;Werbekosten;3.800,00;Marketing
+2025-07;Mustermann GmbH;4900;Sonstige Betriebskosten;4.227,00;Verwaltung
+2025-08;Mustermann GmbH;8000;Umsatzerlöse 19%;104.570,00;Vertrieb
+2025-08;Mustermann GmbH;3000;Wareneinkauf 19%;35.500,00;Einkauf
+2025-08;Mustermann GmbH;4100;Löhne und Gehälter;23.000,00;Personal
+2025-08;Mustermann GmbH;4210;Miete & Pacht;4.500,00;Verwaltung
+2025-08;Mustermann GmbH;4830;EDV-Kosten & Software;10.900,00;IT
+2025-08;Mustermann GmbH;4600;Werbekosten;3.900,00;Marketing
+2025-08;Mustermann GmbH;4900;Sonstige Betriebskosten;5.192,00;Verwaltung
+2025-10;Mustermann GmbH;8000;Umsatzerlöse 19%;110.000,00;Vertrieb
+2025-10;Mustermann GmbH;3000;Wareneinkauf 19%;37.000,00;Einkauf
+2025-10;Mustermann GmbH;4100;Löhne und Gehälter;24.000,00;Personal
+2025-10;Mustermann GmbH;4210;Miete & Pacht;4.500,00;Verwaltung
+2025-10;Mustermann GmbH;4830;EDV-Kosten & Software;11.500,00;IT
+2025-10;Mustermann GmbH;4600;Werbekosten;4.300,00;Marketing
+2025-10;Mustermann GmbH;4900;Sonstige Betriebskosten;6.200,00;Verwaltung
+2025-11;Mustermann GmbH;8000;Umsatzerlöse 19%;113.000,00;Vertrieb
+2025-11;Mustermann GmbH;3000;Wareneinkauf 19%;38.000,00;Einkauf
+2025-11;Mustermann GmbH;4100;Löhne und Gehälter;24.000,00;Personal
+2025-11;Mustermann GmbH;4210;Miete & Pacht;4.600,00;Verwaltung
+2025-11;Mustermann GmbH;4830;EDV-Kosten & Software;11.800,00;IT
+2025-11;Mustermann GmbH;4600;Werbekosten;4.400,00;Marketing
+2025-11;Mustermann GmbH;4900;Sonstige Betriebskosten;6.200,00;Verwaltung
+2025-12;Mustermann GmbH;8000;Umsatzerlöse 19%;118.000,00;Vertrieb
+2025-12;Mustermann GmbH;3000;Wareneinkauf 19%;40.000,00;Einkauf
+2025-12;Mustermann GmbH;4100;Löhne und Gehälter;24.500,00;Personal
+2025-12;Mustermann GmbH;4210;Miete & Pacht;4.600,00;Verwaltung
+2025-12;Mustermann GmbH;4830;EDV-Kosten & Software;12.000,00;IT
+2025-12;Mustermann GmbH;4600;Werbekosten;4.600,00;Marketing
+2025-12;Mustermann GmbH;4900;Sonstige Betriebskosten;6.800,00;Verwaltung
+2025-02;Mustermann GmbH;1400;Forderungen aus LuL;46.500,00;Finance
+2025-02;Mustermann GmbH;1200;Bank (Girokonto);25.000,00;Finance
+2025-02;Mustermann GmbH;1600;Verbindlichkeiten LuL;19.000,00;Finance
+2025-03;Mustermann GmbH;1400;Forderungen aus LuL;48.000,00;Finance
+2025-03;Mustermann GmbH;1200;Bank (Girokonto);27.000,00;Finance
+2025-03;Mustermann GmbH;1600;Verbindlichkeiten LuL;20.000,00;Finance
+2025-04;Mustermann GmbH;1400;Forderungen aus LuL;45.000,00;Finance
+2025-04;Mustermann GmbH;1200;Bank (Girokonto);26.000,00;Finance
+2025-04;Mustermann GmbH;1600;Verbindlichkeiten LuL;19.000,00;Finance
+2025-05;Mustermann GmbH;1400;Forderungen aus LuL;48.500,00;Finance
+2025-05;Mustermann GmbH;1200;Bank (Girokonto);28.500,00;Finance
+2025-05;Mustermann GmbH;1600;Verbindlichkeiten LuL;20.300,00;Finance
+2025-06;Mustermann GmbH;1400;Forderungen aus LuL;50.000,00;Finance
+2025-06;Mustermann GmbH;1200;Bank (Girokonto);29.500,00;Finance
+2025-06;Mustermann GmbH;1600;Verbindlichkeiten LuL;21.000,00;Finance
+2025-07;Mustermann GmbH;1400;Forderungen aus LuL;49.000,00;Finance
+2025-07;Mustermann GmbH;1200;Bank (Girokonto);29.500,00;Finance
+2025-07;Mustermann GmbH;1600;Verbindlichkeiten LuL;20.600,00;Finance
+2025-08;Mustermann GmbH;1400;Forderungen aus LuL;51.000,00;Finance
+2025-08;Mustermann GmbH;1200;Bank (Girokonto);31.000,00;Finance
+2025-08;Mustermann GmbH;1600;Verbindlichkeiten LuL;21.200,00;Finance
+2025-09;Mustermann GmbH;1400;Forderungen aus LuL;52.000,00;Finance
+2025-09;Mustermann GmbH;1200;Bank (Girokonto);31.500,00;Finance
+2025-09;Mustermann GmbH;1600;Verbindlichkeiten LuL;21.500,00;Finance
+2025-10;Mustermann GmbH;1400;Forderungen aus LuL;53.000,00;Finance
+2025-10;Mustermann GmbH;1200;Bank (Girokonto);32.500,00;Finance
+2025-10;Mustermann GmbH;1600;Verbindlichkeiten LuL;22.000,00;Finance
+2025-11;Mustermann GmbH;1400;Forderungen aus LuL;54.500,00;Finance
+2025-11;Mustermann GmbH;1200;Bank (Girokonto);34.000,00;Finance
+2025-11;Mustermann GmbH;1600;Verbindlichkeiten LuL;22.500,00;Finance
+2025-12;Mustermann GmbH;1400;Forderungen aus LuL;57.000,00;Finance
+2025-12;Mustermann GmbH;1200;Bank (Girokonto);35.000,00;Finance
+2025-12;Mustermann GmbH;1600;Verbindlichkeiten LuL;24.000,00;Finance

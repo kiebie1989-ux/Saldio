@@ -1,0 +1,7 @@
+Monat;Mandant;Konto;Kontobezeichnung;BWA-Gruppe;Betrag;Kostenstelle
+2025-01;Mustermann GmbH;8000;Umsatzerlöse 19%;Umsatz;92.300,00;Vertrieb
+2025-01;Mustermann GmbH;4000;Wareneinsatz;Kosten;31.000,00;Einkauf
+2025-01;Mustermann GmbH;4200;Personalkosten;Personal;22.000,00;Team Gesamt
+2025-01;Mustermann GmbH;4300;Sonstige Kosten;Sonstige;17.270,00;Verwaltung
+2025-02;Mustermann GmbH;8000;Umsatzerlöse 19%;Umsatz;95.550,00;Vertrieb
+2025-02;Mustermann GmbH;4000;Wareneinsatz;Kosten;32.000,00;Einkauf

@@ -1,0 +1,32 @@
+spring:
+  main:
+    web-application-type: none
+    banner-mode: "off"
+  ai:
+    # Provider 1 — lokales Ollama
+    ollama:
+      base-url: http://127.0.0.1:11434
+      init:
+        pull-model-strategy: never
+      chat:
+        options:
+          model: llama3.2:1b
+          temperature: 0.2
+    # Provider 2 — OpenAI-kompatibel; per Default auf OpenRouter gestellt.
+    # Ohne echten Key bleibt ein Platzhalter -> Bean baut, schlägt erst beim Aufruf fehl.
+    openai:
+      base-url: https://openrouter.ai/api
+      api-key: ${OPENROUTER_API_KEY:placeholder}
+      chat:
+        options:
+          model: ${OPENROUTER_MODEL:meta-llama/llama-3.2-1b-instruct}
+          temperature: 0.2
+
+# Aktiver Provider für den PoC-Lauf (override per --bwa.llm.provider=openrouter)
+bwa:
+  llm:
+    provider: ollama
+
+logging:
+  level:
+    root: WARN

@@ -1,0 +1,38 @@
+<mat-toolbar color="primary" class="app-toolbar">
+  <mat-icon>insights</mat-icon>
+  <span class="app-title">{{ title }}</span>
+  <span class="spacer"></span>
+  @if (auth.authenticated()) {
+    <span class="benutzer"><mat-icon>person</mat-icon> {{ auth.username() }}</span>
+    <button mat-button (click)="auth.logout()">
+      <mat-icon>logout</mat-icon> Abmelden
+    </button>
+  } @else {
+    <button mat-button (click)="auth.login()">
+      <mat-icon>login</mat-icon> Anmelden
+    </button>
+  }
+</mat-toolbar>
+
+<mat-sidenav-container class="app-container">
+  <mat-sidenav mode="side" opened class="app-sidenav">
+    <mat-nav-list>
+      @for (item of navItems(); track item.path) {
+        <a
+          mat-list-item
+          [routerLink]="item.path"
+          routerLinkActive
+          #rla="routerLinkActive"
+          [activated]="rla.isActive"
+        >
+          <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+          <span matListItemTitle>{{ item.label }}</span>
+        </a>
+      }
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="app-content">
+    <router-outlet />
+  </mat-sidenav-content>
+</mat-sidenav-container>

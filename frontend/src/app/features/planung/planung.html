@@ -1,0 +1,48 @@
+<div class="pl-header">
+  <h1>Planung & Forecast</h1>
+  <div class="filters">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Mandant</mat-label>
+      <mat-select [value]="selectedMandant()" (selectionChange)="onMandantChange($event.value)">
+        @for (m of mandanten(); track m.id) {
+          <mat-option [value]="m.name">{{ m.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Szenario</mat-label>
+      <mat-select [value]="szenario()" (selectionChange)="onSzenarioChange($event.value)">
+        @for (s of szenarien; track s) {
+          <mat-option [value]="s">{{ s }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+
+@if (bericht(); as b) {
+  <mat-card class="block">
+    <mat-card-content>
+      <div class="prognose">
+        Jahresprognose ({{ b.szenario }}): Umsatz <strong>{{ b.jahresprognose.umsatz | number:'1.0-0' }} €</strong>,
+        Rohertrag {{ b.jahresprognose.rohertrag | number:'1.0-0' }} €,
+        EBIT {{ b.jahresprognose.ebit | number:'1.0-0' }} €
+      </div>
+      <div echarts [options]="chartOptions()" class="chart"></div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="block">
+    <mat-card-content class="scroll">
+      <table mat-table [dataSource]="b.zeilen">
+        <ng-container matColumnDef="monat"><th mat-header-cell *matHeaderCellDef>Monat</th><td mat-cell *matCellDef="let r">{{ r.monat }}</td></ng-container>
+        <ng-container matColumnDef="typ"><th mat-header-cell *matHeaderCellDef>Typ</th><td mat-cell *matCellDef="let r">{{ r.typ }}</td></ng-container>
+        <ng-container matColumnDef="umsatz"><th mat-header-cell *matHeaderCellDef class="num">Umsatz</th><td mat-cell *matCellDef="let r" class="num">{{ r.umsatz | number:'1.0-0' }}</td></ng-container>
+        <ng-container matColumnDef="rohertrag"><th mat-header-cell *matHeaderCellDef class="num">Rohertrag</th><td mat-cell *matCellDef="let r" class="num">{{ r.rohertrag | number:'1.0-0' }}</td></ng-container>
+        <ng-container matColumnDef="ebit"><th mat-header-cell *matHeaderCellDef class="num">EBIT</th><td mat-cell *matCellDef="let r" class="num">{{ r.ebit | number:'1.0-0' }}</td></ng-container>
+        <tr mat-header-row *matHeaderRowDef="spalten"></tr>
+        <tr mat-row *matRowDef="let row; columns: spalten" [class.plan-row]="row.typ === 'PLAN'"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+}

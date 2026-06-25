@@ -1,0 +1,35 @@
+.app-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+
+  .app-title {
+    margin-left: 0.5rem;
+    font-weight: 500;
+  }
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+
+  .benutzer {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-right: 0.5rem;
+    font: var(--mat-sys-body-medium);
+  }
+}
+
+.app-container {
+  // Toolbar ist 64px hoch
+  height: calc(100vh - 64px);
+}
+
+.app-sidenav {
+  width: 240px;
+}
+
+.app-content {
+  padding: 1.5rem;
+}

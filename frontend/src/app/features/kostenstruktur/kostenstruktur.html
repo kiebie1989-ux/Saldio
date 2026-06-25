@@ -1,0 +1,45 @@
+<div class="ks-header">
+  <h1>Kostenstruktur</h1>
+  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+    <mat-label>Mandant</mat-label>
+    <mat-select [value]="selectedMandant()" (selectionChange)="onMandantChange($event.value)">
+      @for (m of mandanten(); track m.id) {
+        <mat-option [value]="m.name">{{ m.name }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+</div>
+
+@if (bericht(); as b) {
+  <mat-card class="block">
+    <mat-card-header><mat-card-title>Kostenarten je Monat</mat-card-title></mat-card-header>
+    <mat-card-content class="scroll">
+      <table mat-table [dataSource]="b.kostenarten">
+        <ng-container matColumnDef="monat"><th mat-header-cell *matHeaderCellDef>Monat</th><td mat-cell *matCellDef="let r">{{ r.monat }}</td></ng-container>
+        <ng-container matColumnDef="umsatz"><th mat-header-cell *matHeaderCellDef class="num">Umsatz</th><td mat-cell *matCellDef="let r" class="num">{{ r.umsatz | number:'1.0-0' }}</td></ng-container>
+        <ng-container matColumnDef="wareneinsatz"><th mat-header-cell *matHeaderCellDef class="num">Wareneinsatz</th><td mat-cell *matCellDef="let r" class="num">{{ r.wareneinsatz | number:'1.0-0' }}</td></ng-container>
+        <ng-container matColumnDef="weQuote"><th mat-header-cell *matHeaderCellDef class="num">WE-%</th><td mat-cell *matCellDef="let r" class="num">{{ r.weQuote }}</td></ng-container>
+        <ng-container matColumnDef="personal"><th mat-header-cell *matHeaderCellDef class="num">Personal</th><td mat-cell *matCellDef="let r" class="num">{{ r.personal | number:'1.0-0' }}</td></ng-container>
+        <ng-container matColumnDef="persQuote"><th mat-header-cell *matHeaderCellDef class="num">Pers-%</th><td mat-cell *matCellDef="let r" class="num">{{ r.persQuote }}</td></ng-container>
+        <ng-container matColumnDef="sonstige"><th mat-header-cell *matHeaderCellDef class="num">Sonstige</th><td mat-cell *matCellDef="let r" class="num">{{ r.sonstige | number:'1.0-0' }}</td></ng-container>
+        <ng-container matColumnDef="sonsQuote"><th mat-header-cell *matHeaderCellDef class="num">Sons-%</th><td mat-cell *matCellDef="let r" class="num">{{ r.sonsQuote }}</td></ng-container>
+        <ng-container matColumnDef="gesamtkostenquote"><th mat-header-cell *matHeaderCellDef class="num">Gesamt-%</th><td mat-cell *matCellDef="let r" class="num">{{ r.gesamtkostenquote }}</td></ng-container>
+        <tr mat-header-row *matHeaderRowDef="artSpalten"></tr>
+        <tr mat-row *matRowDef="let row; columns: artSpalten"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="block">
+    <mat-card-header><mat-card-title>Lohnsumme je Kostenstelle</mat-card-title></mat-card-header>
+    <mat-card-content>
+      <table mat-table [dataSource]="b.kostenstellen">
+        <ng-container matColumnDef="kostenstelle"><th mat-header-cell *matHeaderCellDef>Kostenstelle</th><td mat-cell *matCellDef="let r">{{ r.kostenstelle }}</td></ng-container>
+        <ng-container matColumnDef="personalkosten"><th mat-header-cell *matHeaderCellDef class="num">Personalkosten</th><td mat-cell *matCellDef="let r" class="num">{{ r.personalkosten | number:'1.0-0' }}</td></ng-container>
+        <ng-container matColumnDef="anteil"><th mat-header-cell *matHeaderCellDef class="num">Anteil %</th><td mat-cell *matCellDef="let r" class="num">{{ r.anteil }}</td></ng-container>
+        <tr mat-header-row *matHeaderRowDef="stelleSpalten"></tr>
+        <tr mat-row *matRowDef="let row; columns: stelleSpalten"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+}

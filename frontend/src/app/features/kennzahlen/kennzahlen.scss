@@ -1,0 +1,33 @@
+.kennzahlen-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.kennzahlen-table {
+  width: 100%;
+
+  .num {
+    text-align: right;
+  }
+  .interpretation {
+    color: var(--mat-sys-on-surface-variant);
+    font: var(--mat-sys-body-small);
+  }
+}
+
+.ampel-gruen {
+  color: #2e7d32;
+}
+.ampel-gelb {
+  color: #f9a825;
+}
+.ampel-rot {
+  color: #c62828;
+}
+.ampel-neutral {
+  color: var(--mat-sys-outline);
+}

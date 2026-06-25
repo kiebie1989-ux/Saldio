@@ -1,0 +1,33 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: bwa-postgres
+    environment:
+      POSTGRES_DB: bwa
+      POSTGRES_USER: bwa
+      POSTGRES_PASSWORD: bwa
+    ports:
+      - "5432:5432"
+    volumes:
+      - bwa-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bwa -d bwa"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.6.3
+    container_name: bwa-keycloak
+    command: ["start-dev", "--import-realm"]
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+      KC_HEALTH_ENABLED: "true"
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./infra/keycloak/bwa-realm.json:/opt/keycloak/data/import/bwa-realm.json:ro
+
+volumes:
+  bwa-pgdata:

@@ -1,0 +1,36 @@
+<div class="kum-header">
+  <h1>Kumuliert / Final</h1>
+  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+    <mat-label>Modus</mat-label>
+    <mat-select [value]="modus()" (selectionChange)="onModusChange($event.value)">
+      @for (m of modusOptionen; track m) {
+        <mat-option [value]="m">{{ m }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+</div>
+
+@if (bericht(); as b) {
+  <mat-card>
+    <mat-card-header><mat-card-title>Mandantenvergleich {{ b.jahr }}</mat-card-title></mat-card-header>
+    <mat-card-content class="scroll">
+      <table mat-table [dataSource]="b.mandanten">
+        <ng-container matColumnDef="mandant"><th mat-header-cell *matHeaderCellDef>Mandant</th><td mat-cell *matCellDef="let r">{{ r.mandant }}</td></ng-container>
+        <ng-container matColumnDef="umsatz"><th mat-header-cell *matHeaderCellDef class="num">Umsatz</th><td mat-cell *matCellDef="let r" class="num">{{ r.umsatz | number:'1.0-0' }}</td></ng-container>
+        <ng-container matColumnDef="rohertrag"><th mat-header-cell *matHeaderCellDef class="num">Rohertrag</th><td mat-cell *matCellDef="let r" class="num">{{ r.rohertrag | number:'1.0-0' }}</td></ng-container>
+        <ng-container matColumnDef="rohertragsquote"><th mat-header-cell *matHeaderCellDef class="num">RohE-%</th><td mat-cell *matCellDef="let r" class="num">{{ r.rohertragsquote }}</td></ng-container>
+        <ng-container matColumnDef="ebit"><th mat-header-cell *matHeaderCellDef class="num">EBIT</th><td mat-cell *matCellDef="let r" class="num">{{ r.ebit | number:'1.0-0' }}</td></ng-container>
+        <ng-container matColumnDef="ebitMarge"><th mat-header-cell *matHeaderCellDef class="num">EBIT-%</th><td mat-cell *matCellDef="let r" class="num">{{ r.ebitMarge }}</td></ng-container>
+        <tr mat-header-row *matHeaderRowDef="spalten"></tr>
+        <tr mat-row *matRowDef="let row; columns: spalten"></tr>
+      </table>
+
+      <div class="summe">
+        <strong>{{ b.summe.mandant }}:</strong>
+        Umsatz {{ b.summe.umsatz | number:'1.0-0' }} €,
+        Rohertrag {{ b.summe.rohertrag | number:'1.0-0' }} €,
+        EBIT {{ b.summe.ebit | number:'1.0-0' }} € ({{ b.summe.ebitMarge }} %)
+      </div>
+    </mat-card-content>
+  </mat-card>
+}

@@ -1,0 +1,44 @@
+.pl-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.filters {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.block {
+  margin-bottom: 1.5rem;
+}
+
+.prognose {
+  margin-bottom: 1rem;
+}
+
+.chart {
+  width: 100%;
+  height: 320px;
+}
+
+.scroll {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+}
+
+.num {
+  text-align: right;
+}
+
+.plan-row {
+  background: var(--mat-sys-surface-container);
+  font-style: italic;
+}

@@ -1,0 +1,33 @@
+.scroll {
+  overflow-x: auto;
+}
+
+.struktur {
+  width: 100%;
+  white-space: nowrap;
+
+  .num {
+    text-align: right;
+  }
+
+  .ytd {
+    font-weight: 600;
+    border-left: 1px solid var(--mat-sys-outline-variant);
+  }
+
+  td.position {
+    min-width: 240px;
+  }
+
+  // Summenzeilen hervorheben
+  tr.summe {
+    background: var(--mat-sys-surface-container);
+    font-weight: 600;
+  }
+
+  // Prüfzeile (Bilanzdifferenz)
+  tr.pruefung {
+    font-style: italic;
+    color: var(--mat-sys-on-surface-variant);
+  }
+}

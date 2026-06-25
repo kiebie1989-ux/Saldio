@@ -1,0 +1,64 @@
+<div class="bericht-header">
+  <h1>Mandantenbericht</h1>
+  <div class="header-actions">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Mandant</mat-label>
+      <mat-select [value]="selectedMandant()" (selectionChange)="onMandantChange($event.value)">
+        @for (m of mandanten(); track m.id) {
+          <mat-option [value]="m.name">{{ m.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <a mat-flat-button color="primary" [href]="pdfHref()" target="_blank">
+      <mat-icon>picture_as_pdf</mat-icon> PDF herunterladen
+    </a>
+  </div>
+</div>
+
+@if (bericht(); as b) {
+  <p class="quelle">Textquelle: <strong>{{ b.quelle }}</strong></p>
+
+  <mat-card class="block">
+    <mat-card-header><mat-card-title>Bereichsanalyse</mat-card-title></mat-card-header>
+    <mat-card-content>
+      <table mat-table [dataSource]="b.bereiche" class="full">
+        <ng-container matColumnDef="bereich">
+          <th mat-header-cell *matHeaderCellDef>Bereich</th>
+          <td mat-cell *matCellDef="let r">{{ r.bereich }}</td>
+        </ng-container>
+        <ng-container matColumnDef="ampel">
+          <th mat-header-cell *matHeaderCellDef>Ampel</th>
+          <td mat-cell *matCellDef="let r">
+            <mat-icon [class]="ampelClass(r.ampel)">{{ ampelIcon(r.ampel) }}</mat-icon>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="bewertung">
+          <th mat-header-cell *matHeaderCellDef>Bewertung</th>
+          <td mat-cell *matCellDef="let r">{{ r.bewertung }}</td>
+        </ng-container>
+        <ng-container matColumnDef="massnahme">
+          <th mat-header-cell *matHeaderCellDef>Maßnahme</th>
+          <td mat-cell *matCellDef="let r">{{ r.massnahme }}</td>
+        </ng-container>
+        <ng-container matColumnDef="analyse">
+          <th mat-header-cell *matHeaderCellDef>Analyse</th>
+          <td mat-cell *matCellDef="let r" class="analyse">{{ r.analyse }}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="spalten"></tr>
+        <tr mat-row *matRowDef="let row; columns: spalten"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="block">
+    <mat-card-header><mat-card-title>Managementkommentar</mat-card-title></mat-card-header>
+    <mat-card-content>
+      @for (a of b.managementkommentar; track a.titel) {
+        <div class="abschnitt">
+          <div class="titel">{{ a.titel }}</div>
+          <div>{{ a.text }}</div>
+        </div>
+      }
+    </mat-card-content>
+  </mat-card>
+}

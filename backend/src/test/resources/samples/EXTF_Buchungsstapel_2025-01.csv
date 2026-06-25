@@ -1,0 +1,6 @@
+"EXTF";700;21;"Buchungsstapel";7;20250201120000000;;"";"";"";1001;73841;20250101;4;20250101;20250131;"BWA Januar 2025";"";1;0;0;"EUR";;;;;;""
+Umsatz (ohne Soll/Haben-Kz);Soll/Haben-Kennzeichen;WKZ Umsatz;Kurs;Basis-Umsatz;WKZ Basis-Umsatz;Konto;Gegenkonto (ohne BU-Schlüssel);BU-Schlüssel;Belegdatum;Belegfeld 1;Belegfeld 2;Skonto;Buchungstext
+92.300,00;H;EUR;;;;8000;1200;;1501;RE-2025-001;;;Umsatzerlöse 19% Januar
+31.000,00;S;EUR;;;;3000;1600;;1501;ER-2025-014;;;Wareneinkauf Januar
+22.000,00;S;EUR;;;;4100;1200;;3101;LOHN-01;;;Löhne und Gehälter Januar
+4.200,00;S;EUR;;;;4210;1200;;3101;MIETE-01;;;Miete & Pacht Januar

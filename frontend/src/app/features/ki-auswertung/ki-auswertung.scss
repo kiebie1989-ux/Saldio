@@ -1,0 +1,37 @@
+.ki-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.quelle {
+  color: var(--mat-sys-on-surface-variant);
+  margin: 0 0 1rem;
+}
+
+.bereich-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1rem;
+}
+
+.massnahme {
+  margin-top: 0.5rem;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.ampel-gruen {
+  color: #2e7d32;
+}
+.ampel-gelb {
+  color: #f9a825;
+}
+.ampel-rot {
+  color: #c62828;
+}
+.ampel-neutral {
+  color: var(--mat-sys-outline);
+}

@@ -1,0 +1,19 @@
+<div class="struktur-header">
+  <h1>Gewinn- und Verlustrechnung</h1>
+  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+    <mat-label>Mandant</mat-label>
+    <mat-select [value]="selectedMandant()" (selectionChange)="onMandantChange($event.value)">
+      @for (m of mandanten(); track m.id) {
+        <mat-option [value]="m.name">{{ m.name }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+</div>
+
+@if (bericht(); as b) {
+  <mat-card>
+    <mat-card-content>
+      <app-struktur-tabelle [monate]="b.monate" [zeilen]="b.zeilen" />
+    </mat-card-content>
+  </mat-card>
+}

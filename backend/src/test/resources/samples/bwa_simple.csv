@@ -1,0 +1,7 @@
+Monat;Mandant;Konto;Kontobezeichnung;Betrag;Kostenstelle
+2025-01;Mustermann GmbH;8000;Umsatzerlöse 19%;92.300,00;Vertrieb
+2025-01;Mustermann GmbH;3000;Wareneinkauf 19%;31.000,00;Einkauf
+2025-01;Mustermann GmbH;4100;Löhne und Gehälter;22.000,00;Personal
+2025-01;Mustermann GmbH;4830;EDV-Kosten & Software;8.500,00;IT
+2025-01;Mustermann GmbH;4210;Miete & Pacht;4.200,00;Verwaltung
+2025-01;Mustermann GmbH;4600;Werbekosten;2.800,00;Marketing

@@ -1,0 +1,52 @@
+.bericht-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.quelle {
+  color: var(--mat-sys-on-surface-variant);
+  margin: 0.25rem 0 1rem;
+}
+
+.block {
+  margin-bottom: 1.5rem;
+}
+
+.full {
+  width: 100%;
+}
+
+.analyse {
+  color: var(--mat-sys-on-surface-variant);
+  font: var(--mat-sys-body-small);
+}
+
+.abschnitt {
+  margin-bottom: 0.75rem;
+
+  .titel {
+    font-weight: 600;
+  }
+}
+
+.ampel-gruen {
+  color: #2e7d32;
+}
+.ampel-gelb {
+  color: #f9a825;
+}
+.ampel-rot {
+  color: #c62828;
+}
+.ampel-neutral {
+  color: var(--mat-sys-outline);
+}

@@ -1,0 +1,46 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="|Mandantenbericht ${bericht.mandant()} ${bericht.jahr()}|">Mandantenbericht</title>
+    <style>
+        body { font-family: sans-serif; font-size: 11px; color: #222; }
+        h1 { font-size: 18px; margin-bottom: 2px; }
+        .meta { color: #666; font-size: 10px; margin-bottom: 16px; }
+        h2 { font-size: 13px; margin-top: 18px; border-bottom: 1px solid #ccc; padding-bottom: 2px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 6px; }
+        th, td { text-align: left; padding: 4px 6px; border-bottom: 1px solid #eee; vertical-align: top; }
+        th { background: #f3f3f3; }
+        .gruen { color: #2e7d32; font-weight: bold; }
+        .gelb { color: #f9a825; font-weight: bold; }
+        .rot { color: #c62828; font-weight: bold; }
+        .neutral { color: #888; }
+        .abschnitt { margin-top: 10px; }
+        .abschnitt .titel { font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1 th:text="|BWA-Mandantenbericht: ${bericht.mandant()}|">Mandantenbericht</h1>
+    <div class="meta" th:text="|Geschäftsjahr ${bericht.jahr()} · Textquelle: ${bericht.quelle()}|">Meta</div>
+
+    <h2>Bereichsanalyse</h2>
+    <table>
+        <thead>
+        <tr><th>Bereich</th><th>Ampel</th><th>Bewertung</th><th>Maßnahme</th><th>Analyse</th></tr>
+        </thead>
+        <tbody>
+        <tr th:each="b : ${bericht.bereiche()}">
+            <td th:text="${b.bereich()}">Bereich</td>
+            <td th:classappend="${b.ampel().name().toLowerCase()}" th:text="${b.ampel()}">Ampel</td>
+            <td th:text="${b.bewertung()}">Bewertung</td>
+            <td th:text="${b.massnahme()}">Maßnahme</td>
+            <td th:text="${b.analyse()}">Analyse</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h2>Managementkommentar</h2>
+    <div class="abschnitt" th:each="a : ${bericht.managementkommentar()}">
+        <div class="titel" th:text="${a.titel()}">Titel</div>
+        <div th:text="${a.text()}">Text</div>
+    </div>
+</body>
+</html>

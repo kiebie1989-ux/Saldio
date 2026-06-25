@@ -1,0 +1,30 @@
+<div class="ki-header">
+  <h1>KI-Auswertung</h1>
+  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+    <mat-label>Mandant</mat-label>
+    <mat-select [value]="selectedMandant()" (selectionChange)="onMandantChange($event.value)">
+      @for (m of mandanten(); track m.id) {
+        <mat-option [value]="m.name">{{ m.name }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+</div>
+
+@if (bericht(); as b) {
+  <p class="quelle">Textquelle: <strong>{{ b.quelle }}</strong></p>
+  <div class="bereich-grid">
+    @for (r of b.bereiche; track r.bereich) {
+      <mat-card class="bereich-card">
+        <mat-card-header>
+          <mat-icon mat-card-avatar [class]="ampelClass(r.ampel)">{{ ampelIcon(r.ampel) }}</mat-icon>
+          <mat-card-title>{{ r.bereich }}</mat-card-title>
+          <mat-card-subtitle>{{ r.bewertung }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{ r.analyse }}</p>
+          <p class="massnahme"><strong>Maßnahme:</strong> {{ r.massnahme }}</p>
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+}

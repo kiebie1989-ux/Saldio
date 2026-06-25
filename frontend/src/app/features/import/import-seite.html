@@ -1,0 +1,51 @@
+<h1>Import</h1>
+
+<mat-card class="block">
+  <mat-card-header><mat-card-title>DATEV-Datei importieren</mat-card-title></mat-card-header>
+  <mat-card-content>
+    <div class="upload-row">
+      <mat-button-toggle-group [value]="typ()" (change)="setTyp($event.value)" aria-label="Format">
+        <mat-button-toggle value="csv">Saldenliste-CSV</mat-button-toggle>
+        <mat-button-toggle value="extf">DATEV-EXTF</mat-button-toggle>
+      </mat-button-toggle-group>
+
+      <button mat-flat-button color="primary" (click)="dateiInput.click()" [disabled]="laedt()">
+        <mat-icon>upload_file</mat-icon> Datei wählen
+      </button>
+      <input #dateiInput type="file" accept=".csv" hidden (change)="onDatei($event)" />
+    </div>
+
+    @if (laedt()) {
+      <mat-progress-bar mode="indeterminate" />
+    }
+
+    @if (fehler(); as f) {
+      <p class="fehler"><mat-icon>error</mat-icon> {{ f }}</p>
+    }
+
+    @if (letztesErgebnis(); as e) {
+      <p class="ok">
+        <mat-icon>check_circle</mat-icon>
+        {{ e.dateiname }} ({{ e.quelle }}): {{ e.zeilenOk }} von {{ e.zeilenGesamt }} Zeilen OK,
+        {{ e.zeilenWarnung }} Warnung(en) — Status {{ e.status }}.
+      </p>
+    }
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="block">
+  <mat-card-header><mat-card-title>Import-Historie</mat-card-title></mat-card-header>
+  <mat-card-content class="scroll">
+    <table mat-table [dataSource]="historie()">
+      <ng-container matColumnDef="importiertAm"><th mat-header-cell *matHeaderCellDef>Zeitpunkt</th><td mat-cell *matCellDef="let r">{{ r.importiertAm }}</td></ng-container>
+      <ng-container matColumnDef="dateiname"><th mat-header-cell *matHeaderCellDef>Datei</th><td mat-cell *matCellDef="let r">{{ r.dateiname }}</td></ng-container>
+      <ng-container matColumnDef="quelle"><th mat-header-cell *matHeaderCellDef>Quelle</th><td mat-cell *matCellDef="let r">{{ r.quelle }}</td></ng-container>
+      <ng-container matColumnDef="zeilenGesamt"><th mat-header-cell *matHeaderCellDef class="num">Gesamt</th><td mat-cell *matCellDef="let r" class="num">{{ r.zeilenGesamt }}</td></ng-container>
+      <ng-container matColumnDef="zeilenOk"><th mat-header-cell *matHeaderCellDef class="num">OK</th><td mat-cell *matCellDef="let r" class="num">{{ r.zeilenOk }}</td></ng-container>
+      <ng-container matColumnDef="zeilenWarnung"><th mat-header-cell *matHeaderCellDef class="num">Warnung</th><td mat-cell *matCellDef="let r" class="num">{{ r.zeilenWarnung }}</td></ng-container>
+      <ng-container matColumnDef="status"><th mat-header-cell *matHeaderCellDef>Status</th><td mat-cell *matCellDef="let r">{{ r.status }}</td></ng-container>
+      <tr mat-header-row *matHeaderRowDef="spalten"></tr>
+      <tr mat-row *matRowDef="let row; columns: spalten"></tr>
+    </table>
+  </mat-card-content>
+</mat-card>
