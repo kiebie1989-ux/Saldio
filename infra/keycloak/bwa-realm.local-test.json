@@ -1,0 +1,89 @@
+{
+  "realm": "bwa",
+  "enabled": true,
+  "sslRequired": "none",
+  "registrationAllowed": false,
+  "bruteForceProtected": true,
+  "permanentLockout": false,
+  "failureFactor": 10,
+  "accessTokenLifespan": 300,
+  "ssoSessionIdleTimeout": 1800,
+  "ssoSessionMaxLifespan": 36000,
+  "roles": {
+    "realm": [
+      {
+        "name": "admin",
+        "description": "Vollzugriff inkl. Benutzerverwaltung"
+      },
+      {
+        "name": "bearbeiter",
+        "description": "Import und Bearbeitung"
+      },
+      {
+        "name": "leser",
+        "description": "Nur Auswertungen lesen"
+      }
+    ]
+  },
+  "users": [
+    {
+      "username": "admin",
+      "enabled": true,
+      "email": "admin@bwa.local",
+      "emailVerified": true,
+      "firstName": "Initial",
+      "lastName": "Admin",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "admin",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "admin"
+      ]
+    },
+    {
+      "username": "leser",
+      "enabled": true,
+      "email": "leser@bwa.local",
+      "emailVerified": true,
+      "firstName": "Lese",
+      "lastName": "Benutzer",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "leser",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "leser"
+      ]
+    }
+  ],
+  "clients": [
+    {
+      "clientId": "bwa-app",
+      "enabled": true,
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": true,
+      "redirectUris": [
+        "http://localhost:4200/*",
+        "http://localhost:14200/*",
+        "https://bwa.127.0.0.1.nip.io:8943/*"
+      ],
+      "webOrigins": [
+        "http://localhost:4200",
+        "http://localhost:14200",
+        "+",
+        "https://bwa.127.0.0.1.nip.io:8943"
+      ],
+      "attributes": {
+        "post.logout.redirect.uris": "http://localhost:4200/*##http://localhost:14200/*"
+      }
+    }
+  ]
+}

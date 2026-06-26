@@ -1,0 +1,16 @@
+# NUR für den lokalen Prod-Smoke-Test (docker-compose.prod.test.yml).
+# Abweichung zum echten Betrieb: 'tls internal' (Caddy-eigene CA, self-signed) statt
+# Let's Encrypt, weil lokal keine öffentliche Domain/DNS erreichbar ist. Sonst identischer
+# Reverse-Proxy-Pfad wie der produktive Caddyfile.
+
+{$APP_DOMAIN} {
+	tls internal
+	encode gzip
+	reverse_proxy frontend:80
+}
+
+{$AUTH_DOMAIN} {
+	tls internal
+	encode gzip
+	reverse_proxy keycloak:8080
+}
