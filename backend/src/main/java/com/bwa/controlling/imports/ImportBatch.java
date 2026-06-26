@@ -43,6 +43,12 @@ public class ImportBatch {
     @Column(name = "datei_hash")
     private String dateiHash;
 
+    @Column(name = "erstellt_von")
+    private String erstelltVon;
+
+    @Column(name = "storniert_batch_id")
+    private Long storniertBatchId;
+
     protected ImportBatch() {}
 
     public ImportBatch(String dateiname, String quelle) {
@@ -59,10 +65,15 @@ public class ImportBatch {
     public int getZeilenWarnung() { return zeilenWarnung; }
     public String getStatus() { return status; }
     public String getDateiHash() { return dateiHash; }
+    public String getErstelltVon() { return erstelltVon; }
+    public Long getStorniertBatchId() { return storniertBatchId; }
+
+    public void setStorniertBatchId(Long v) { this.storniertBatchId = v; }
 
     public void setZeilenGesamt(int v) { this.zeilenGesamt = v; }
     public void setZeilenOk(int v) { this.zeilenOk = v; }
     public void setZeilenWarnung(int v) { this.zeilenWarnung = v; }
     public void setStatus(String v) { this.status = v; }
     public void setDateiHash(String v) { this.dateiHash = v; }
+    public void setErstelltVon(String v) { this.erstelltVon = v; }
 }

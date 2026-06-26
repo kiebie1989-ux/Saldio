@@ -25,17 +25,20 @@ public class StammdatenController {
     private final EinstellungRepository einstellungen;
     private final MitarbeiterRepository mitarbeiter;
     private final com.bwa.controlling.benutzer.MandantenZugriffService zugriff;
+    private final com.bwa.controlling.revision.AuditService audit;
 
     public StammdatenController(KontenrahmenRepository kontenrahmen,
                                 MandantRepository mandanten,
                                 EinstellungRepository einstellungen,
                                 MitarbeiterRepository mitarbeiter,
-                                com.bwa.controlling.benutzer.MandantenZugriffService zugriff) {
+                                com.bwa.controlling.benutzer.MandantenZugriffService zugriff,
+                                com.bwa.controlling.revision.AuditService audit) {
         this.kontenrahmen = kontenrahmen;
         this.mandanten = mandanten;
         this.einstellungen = einstellungen;
         this.mitarbeiter = mitarbeiter;
         this.zugriff = zugriff;
+        this.audit = audit;
     }
 
     @GetMapping("/kontenrahmen")
@@ -62,7 +65,10 @@ public class StammdatenController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Einstellung nicht gefunden: " + body.schluessel()));
         e.setWert(body.wert());
-        return einstellungen.save(e);
+        Einstellung gespeichert = einstellungen.save(e);
+        audit.protokolliere("EINSTELLUNG_AENDERN", "einstellung", e.getSchluessel(),
+                "neuer Wert: " + body.wert());
+        return gespeichert;
     }
 
     // Schlüssel im Body statt im Pfad: die Schlüssel enthalten Sonderzeichen (%, Leerzeichen),

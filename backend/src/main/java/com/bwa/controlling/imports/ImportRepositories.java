@@ -11,4 +11,5 @@ interface BuchungRepository extends JpaRepository<Buchung, Long> {
 interface ImportBatchRepository extends JpaRepository<ImportBatch, Long> {
     List<ImportBatch> findAllByOrderByImportiertAmDesc();
     java.util.Optional<ImportBatch> findFirstByDateiHash(String dateiHash);
+    java.util.Optional<ImportBatch> findFirstByStorniertBatchId(Long storniertBatchId);
 }

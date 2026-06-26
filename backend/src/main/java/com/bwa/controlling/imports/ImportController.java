@@ -46,6 +46,11 @@ public class ImportController {
                 .toList();
     }
 
+    @PostMapping("/import/{id}/storno")
+    public ImportErgebnis stornieren(@org.springframework.web.bind.annotation.PathVariable Long id) {
+        return ImportErgebnis.von(importService.storniere(id));
+    }
+
     public record ImportErgebnis(Long id, String dateiname, String quelle, OffsetDateTime importiertAm,
                                  int zeilenGesamt, int zeilenOk, int zeilenWarnung, String status) {
         static ImportErgebnis von(ImportBatch b) {

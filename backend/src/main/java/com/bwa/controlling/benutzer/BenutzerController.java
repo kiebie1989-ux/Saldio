@@ -20,9 +20,12 @@ import java.util.List;
 public class BenutzerController {
 
     private final BenutzerRepository repository;
+    private final com.bwa.controlling.revision.AuditService audit;
 
-    public BenutzerController(BenutzerRepository repository) {
+    public BenutzerController(BenutzerRepository repository,
+                              com.bwa.controlling.revision.AuditService audit) {
         this.repository = repository;
+        this.audit = audit;
     }
 
     @GetMapping
@@ -37,7 +40,10 @@ public class BenutzerController {
                         "Benutzer nicht gefunden: " + body.sub()));
         b.setAlleMandanten(body.alleMandanten());
         b.setMandanten(body.mandanten() == null ? new HashSet<>() : new HashSet<>(body.mandanten()));
-        return toDto(repository.save(b));
+        BenutzerDto dto = toDto(repository.save(b));
+        audit.protokolliere("MANDANTEN_ZUWEISUNG", "benutzer", body.sub(),
+                "alleMandanten=" + body.alleMandanten() + ", mandanten=" + dto.mandanten());
+        return dto;
     }
 
     private static BenutzerDto toDto(Benutzer b) {
