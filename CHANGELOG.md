@@ -3,7 +3,10 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
-## [Unreleased]
+## [0.1.0] - 2026-06-26 — first public beta
+
+First public open-source release. Beta: functional and tested, not yet proven in long-term
+production. Contributions welcome.
 
 ### Added
 - Brand identity: project named **Saldio**, with an SVG logo and favicon (`frontend/public/logo.svg`,

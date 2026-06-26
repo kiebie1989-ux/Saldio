@@ -5,8 +5,19 @@
 <h1 align="center">Saldio</h1>
 
 <p align="center">
+  <a href="https://github.com/kiebie1989-ux/Saldio/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/kiebie1989-ux/Saldio/actions/workflows/ci.yml/badge.svg?branch=main" /></a>
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue.svg" /></a>
+  <img alt="Status: Beta" src="https://img.shields.io/badge/status-beta-orange.svg" />
+  <img alt="Version 0.1.0" src="https://img.shields.io/badge/version-0.1.0-blueviolet.svg" />
 </p>
+
+> 🧪 **Beta.** Saldio is an early, community-driven open-source release — functional and tested
+> (green CI, end-to-end verified), but not yet proven in long-term production. Use at your own risk,
+> and please help shape it: issues, ideas and pull requests are very welcome. See [`CONTRIBUTING.md`](CONTRIBUTING.md).
+>
+> Saldio ist eine frühe, gemeinschaftlich getragene Open-Source-Beta — lauffähig und getestet, aber
+> noch nicht im Langzeit-Echtbetrieb erprobt. Nutzung auf eigene Verantwortung; Mitwirkung
+> ausdrücklich erwünscht (Issues, Ideen, Pull Requests). Das Projekt ist zum Weiterentwickeln gedacht.
 
 Self-hosted controlling & reporting tool for German *Betriebswirtschaftliche Auswertung* (BWA)
 on a DATEV basis (SKR03/SKR04). Multi-tenant, with profit-&-loss / balance-sheet aggregation,
