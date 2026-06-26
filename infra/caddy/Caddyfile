@@ -1,0 +1,12 @@
+# Reverse-Proxy mit automatischem TLS (Let's Encrypt) für die echten Domains.
+# Voraussetzung: DNS der Domains zeigt auf diesen Host, Ports 80/443 erreichbar.
+
+{$APP_DOMAIN} {
+	encode gzip
+	reverse_proxy frontend:80
+}
+
+{$AUTH_DOMAIN} {
+	encode gzip
+	reverse_proxy keycloak:8080
+}

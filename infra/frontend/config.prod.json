@@ -1,0 +1,5 @@
+{
+  "issuer": "https://auth.example.com/realms/bwa",
+  "clientId": "bwa-app",
+  "requireHttps": true
+}
