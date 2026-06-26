@@ -1,6 +1,6 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { authConfig } from './auth.config';
+import { buildAuthConfig, DEFAULT_CONFIG, RuntimeConfig } from './auth.config';
 
 export type Rolle = 'leser' | 'bearbeiter' | 'admin';
 
@@ -16,9 +16,9 @@ export class AuthService {
   readonly username = signal('');
   readonly roles = signal<string[]>([]);
 
-  /** Beim App-Start: Discovery laden, vorhandene Session aufnehmen. */
+  /** Beim App-Start: Laufzeit-Konfiguration + Discovery laden, vorhandene Session aufnehmen. */
   async init(): Promise<void> {
-    this.oauth.configure(authConfig);
+    this.oauth.configure(buildAuthConfig(await ladeRuntimeConfig()));
     this.oauth.setupAutomaticSilentRefresh();
     this.oauth.events.subscribe(() => this.aktualisiere());
     try {
@@ -70,5 +70,19 @@ export class AuthService {
     } catch {
       return [];
     }
+  }
+}
+
+/** Lädt /config.json (relativ zur base href); fällt bei Fehler auf die Dev-Defaults zurück. */
+async function ladeRuntimeConfig(): Promise<RuntimeConfig> {
+  try {
+    const url = new URL('config.json', document.baseURI).toString();
+    const resp = await fetch(url, { cache: 'no-cache' });
+    if (!resp.ok) {
+      return DEFAULT_CONFIG;
+    }
+    return { ...DEFAULT_CONFIG, ...(await resp.json()) };
+  } catch {
+    return DEFAULT_CONFIG;
   }
 }

@@ -1,0 +1,5 @@
+{
+  "issuer": "http://localhost:8081/realms/bwa",
+  "clientId": "bwa-app",
+  "requireHttps": false
+}

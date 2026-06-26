@@ -1,17 +1,29 @@
 import { AuthConfig } from 'angular-oauth2-oidc';
 
-/**
- * OIDC-Konfiguration für Keycloak (Realm "bwa", Public-Client "bwa-app").
- * Authorization Code Flow + PKCE. Issuer für die lokale Entwicklung; in Produktion
- * über Environment/Build-Konfiguration setzen.
- */
-export const authConfig: AuthConfig = {
+/** Zur Laufzeit aus /config.json geladene Umgebungs-Konfiguration ("build once, deploy anywhere"). */
+export interface RuntimeConfig {
+  issuer: string;
+  clientId: string;
+  requireHttps: boolean;
+}
+
+/** Fallback für lokale Entwicklung, falls config.json nicht erreichbar ist. */
+export const DEFAULT_CONFIG: RuntimeConfig = {
   issuer: 'http://localhost:8081/realms/bwa',
-  redirectUri: window.location.origin + '/',
-  postLogoutRedirectUri: window.location.origin + '/',
   clientId: 'bwa-app',
-  responseType: 'code',
-  scope: 'openid profile email',
-  requireHttps: false, // lokale Entwicklung über http
-  showDebugInformation: false,
+  requireHttps: false,
 };
+
+/** Baut die OIDC-Konfiguration (Authorization Code + PKCE) aus der Laufzeit-Konfiguration. */
+export function buildAuthConfig(cfg: RuntimeConfig): AuthConfig {
+  return {
+    issuer: cfg.issuer,
+    redirectUri: window.location.origin + '/',
+    postLogoutRedirectUri: window.location.origin + '/',
+    clientId: cfg.clientId,
+    responseType: 'code',
+    scope: 'openid profile email',
+    requireHttps: cfg.requireHttps,
+    showDebugInformation: false,
+  };
+}
