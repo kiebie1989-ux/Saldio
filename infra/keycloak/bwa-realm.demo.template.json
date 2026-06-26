@@ -1,0 +1,53 @@
+{
+  "realm": "bwa",
+  "enabled": true,
+  "sslRequired": "external",
+  "registrationAllowed": false,
+  "bruteForceProtected": true,
+  "permanentLockout": false,
+  "failureFactor": 10,
+  "accessTokenLifespan": 300,
+  "ssoSessionIdleTimeout": 1800,
+  "ssoSessionMaxLifespan": 36000,
+  "roles": {
+    "realm": [
+      { "name": "admin", "description": "Vollzugriff inkl. Benutzerverwaltung" },
+      { "name": "bearbeiter", "description": "Import und Bearbeitung" },
+      { "name": "leser", "description": "Nur Auswertungen lesen" }
+    ]
+  },
+  "users": [
+    {
+      "username": "admin",
+      "enabled": true,
+      "email": "admin@bwa.local",
+      "emailVerified": true,
+      "firstName": "Demo",
+      "lastName": "Admin",
+      "credentials": [{ "type": "password", "value": "admin", "temporary": false }],
+      "realmRoles": ["admin"]
+    },
+    {
+      "username": "leser",
+      "enabled": true,
+      "email": "leser@bwa.local",
+      "emailVerified": true,
+      "firstName": "Demo",
+      "lastName": "Leser",
+      "credentials": [{ "type": "password", "value": "leser", "temporary": false }],
+      "realmRoles": ["leser"]
+    }
+  ],
+  "clients": [
+    {
+      "clientId": "bwa-app",
+      "enabled": true,
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": true,
+      "redirectUris": ["__APP_ORIGIN__/*"],
+      "webOrigins": ["__APP_ORIGIN__"],
+      "attributes": { "post.logout.redirect.uris": "__APP_ORIGIN__/*" }
+    }
+  ]
+}

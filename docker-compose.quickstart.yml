@@ -1,0 +1,34 @@
+# Quickstart-Override: sofort lauffähige Demo OHNE eigene Domain.
+# Bequem über scripts/quickstart.sh starten, oder direkt:
+#   docker compose -f docker-compose.prod.yml -f docker-compose.quickstart.yml \
+#     --env-file .env.quickstart up -d --build
+#
+# Demo-Besonderheiten (NICHT für Produktivbetrieb):
+#   - Caddy 'tls internal' (self-signed) statt Let's Encrypt -> keine öffentliche Domain/DNS nötig
+#   - Host-Ports 8980/8943 (443 lokal evtl. belegt)
+#   - Demo-Realm mit festen Demo-Logins (REALM_TEMPLATE=bwa-realm.demo.template.json, siehe .env.quickstart)
+#   - demo-seed lädt Beispieldaten (Mandanten/Mitarbeiter) in die App-DB
+services:
+  caddy:
+    ports: !override
+      - "8980:80"
+      - "8943:443"
+    volumes: !override
+      - ./infra/caddy/Caddyfile.local-test:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+  # Spielt nach dem Start der App-DB die Demo-Daten ein (wartet, bis Flyway das Schema erzeugt hat).
+  demo-seed:
+    image: postgres:16-alpine
+    container_name: bwa-demo-seed
+    environment:
+      DB_USER: ${DB_USER}
+      PGPASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./infra/demo:/demo:ro
+    entrypoint: ["sh", "/demo/load-demo.sh"]
+    restart: "no"
+    depends_on:
+      app-db:
+        condition: service_healthy

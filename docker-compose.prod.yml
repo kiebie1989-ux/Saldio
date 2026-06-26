@@ -75,7 +75,7 @@ services:
     command:
       - sh
       - -c
-      - 'sed "s|__APP_ORIGIN__|${APP_ORIGIN}|g" /tpl/bwa-realm.template.json > /shared/bwa-realm.json && echo "Realm gerendert fuer Origin: ${APP_ORIGIN}"'
+      - 'sed "s|__APP_ORIGIN__|${APP_ORIGIN}|g" /tpl/${REALM_TEMPLATE:-bwa-realm.template.json} > /shared/bwa-realm.json && echo "Realm (${REALM_TEMPLATE:-bwa-realm.template.json}) gerendert fuer Origin: ${APP_ORIGIN}"'
     volumes:
       - ./infra/keycloak:/tpl:ro
       - realm_import:/shared
