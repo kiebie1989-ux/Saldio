@@ -23,7 +23,13 @@ GoBD-Bausteinen (append-only Buchungen, Audit-Trail, Festschreibung).
 > Die technischen GoBD-Kontrollen allein stellen keine rechtliche GoBD-Konformität her;
 > dafür sind organisatorische Maßnahmen und eine fachliche/juristische Abnahme nötig.
 
-<!-- Screenshots: bitte hier Dashboard- und Bericht-Screenshots einfügen / add dashboard & report screenshots here -->
+## Screenshots
+
+![Saldio Dashboard](docs/screenshots/dashboard.png)
+
+| Kennzahlen | GuV | Mandantenbericht |
+|:---:|:---:|:---:|
+| ![Kennzahlen](docs/screenshots/kennzahlen.png) | ![GuV](docs/screenshots/guv.png) | ![Mandantenbericht](docs/screenshots/mandantenbericht.png) |
 
 ## Features
 
