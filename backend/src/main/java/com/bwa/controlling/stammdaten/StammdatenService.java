@@ -49,6 +49,14 @@ public class StammdatenService {
         return einstellung("Aktiver Mandant");
     }
 
+    /** Löst eine DATEV-Mandantennummer (aus EXTF) zum Mandantennamen auf. */
+    public Optional<String> mandantNameFuerDatevNr(String datevNr) {
+        if (datevNr == null || datevNr.isBlank()) {
+            return Optional.empty();
+        }
+        return mandanten.findByDatevMandantennr(datevNr.trim()).map(Mandant::getName);
+    }
+
     public Optional<String> einstellung(String schluessel) {
         return einstellungen.findById(schluessel).map(Einstellung::getWert);
     }

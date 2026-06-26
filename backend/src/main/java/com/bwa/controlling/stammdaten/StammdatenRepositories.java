@@ -20,6 +20,7 @@ interface MandantRepository extends JpaRepository<Mandant, Long> {
     List<Mandant> findAllByOrderByNameAsc();
     List<Mandant> findByInKumulierungTrueOrderByNameAsc();
     List<Mandant> findByImFinalberichtTrueOrderByNameAsc();
+    java.util.Optional<Mandant> findByDatevMandantennr(String datevMandantennr);
 }
 
 interface EinstellungRepository extends JpaRepository<Einstellung, String> {

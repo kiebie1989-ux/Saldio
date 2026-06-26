@@ -37,6 +37,12 @@ public class Mandant {
     private String typ;
     private String bemerkung;
 
+    @Column(name = "datev_mandantennr")
+    private String datevMandantennr;
+
+    @Column(name = "datev_beraternr")
+    private String datevBeraternr;
+
     protected Mandant() {}
 
     public Long getId() { return id; }
@@ -47,4 +53,6 @@ public class Mandant {
     public boolean isImFinalbericht() { return imFinalbericht; }
     public String getTyp() { return typ; }
     public String getBemerkung() { return bemerkung; }
+    public String getDatevMandantennr() { return datevMandantennr; }
+    public String getDatevBeraternr() { return datevBeraternr; }
 }

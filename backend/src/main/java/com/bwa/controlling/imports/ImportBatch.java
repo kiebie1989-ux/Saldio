@@ -40,6 +40,9 @@ public class ImportBatch {
     @Column(nullable = false)
     private String status = "OK";
 
+    @Column(name = "datei_hash")
+    private String dateiHash;
+
     protected ImportBatch() {}
 
     public ImportBatch(String dateiname, String quelle) {
@@ -55,9 +58,11 @@ public class ImportBatch {
     public int getZeilenOk() { return zeilenOk; }
     public int getZeilenWarnung() { return zeilenWarnung; }
     public String getStatus() { return status; }
+    public String getDateiHash() { return dateiHash; }
 
     public void setZeilenGesamt(int v) { this.zeilenGesamt = v; }
     public void setZeilenOk(int v) { this.zeilenOk = v; }
     public void setZeilenWarnung(int v) { this.zeilenWarnung = v; }
     public void setStatus(String v) { this.status = v; }
+    public void setDateiHash(String v) { this.dateiHash = v; }
 }

@@ -50,4 +50,10 @@ class StammdatenIT extends AbstractPostgresIT {
         assertThat(einstellungen.findById("Ziel-EBIT-Marge %"))
                 .hasValueSatisfying(e -> assertThat(e.getWert()).isEqualTo("18"));
     }
+
+    @Test
+    void mehrdeutigeKontonummernWerdenErkannt() {
+        // Das geseedete Kontenrahmen-Beispiel hat doppelte SKR03 (2100, 4820) -> sichtbar machen.
+        assertThat(mapping.doppelteKonten()).contains("SKR03 2100", "SKR03 4820");
+    }
 }
