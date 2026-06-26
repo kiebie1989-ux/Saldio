@@ -1,15 +1,15 @@
-# Override für den LOKALEN Prod-Smoke-Test. Beweist den Produktionspfad (Prod-Images,
-# Prod-Keycloak persistent + Realm-Import, Backend prod-Profil, Caddy-TLS-Termination,
-# E2E-Login) ohne öffentliche Domain.
+# Override für den LOKALEN Prod-Smoke-Test. Beweist den Produktionspfad (gerenderter Realm,
+# Laufzeit-Config, Prod-Keycloak, Backend prod-Profil, Caddy-TLS, End-to-End) ohne öffentliche Domain.
 #
 # Start:
 #   docker compose -f docker-compose.prod.yml -f docker-compose.prod.test.yml \
 #     --env-file .env.local-test up -d --build
 #
-# Abweichungen zum echten Betrieb (bewusst, dokumentiert):
+# Einzige Abweichungen zum echten Betrieb (bewusst, dokumentiert):
 #   - Caddy 'tls internal' (self-signed) statt Let's Encrypt -> keine öffentliche DNS/Domain nötig
-#   - Nicht-Standard-Host-Ports 8980/8943 (443 lokal belegt)
-#   - Backend holt JWKS intern via http://keycloak:8080 (Issuer-String wird öffentlich validiert)
+#   - Nicht-Standard-Host-Ports 8980/8943 (443 lokal evtl. belegt)
+# Realm-Redirects, OIDC-Issuer, Frontend-Config und KC_HOSTNAME kommen aus .env.local-test
+# (APP_ORIGIN/AUTH_ORIGIN) - identischer Pfad wie produktiv.
 services:
   caddy:
     ports: !override
@@ -19,13 +19,3 @@ services:
       - ./infra/caddy/Caddyfile.local-test:/etc/caddy/Caddyfile:ro
       - caddy_data:/data
       - caddy_config:/config
-
-  keycloak:
-    environment:
-      KC_HOSTNAME: https://auth.127.0.0.1.nip.io:8943
-    volumes: !override
-      - ./infra/keycloak/bwa-realm.local-test.json:/opt/keycloak/data/import/bwa-realm.json:ro
-
-  frontend:
-    volumes: !override
-      - ./infra/frontend/config.local-test.json:/usr/share/nginx/html/config.json:ro

@@ -22,9 +22,11 @@ services:
     image: bwa-frontend:latest
     container_name: bwa-frontend
     restart: unless-stopped
-    # Umgebungsspezifische Laufzeit-Config (Issuer = AUTH_DOMAIN) über Mount setzen:
-    volumes:
-      - ./infra/frontend/config.prod.json:/usr/share/nginx/html/config.json:ro
+    # Laufzeit-Config (config.json) wird beim Start im Container aus diesen Variablen gerendert.
+    environment:
+      ISSUER: ${AUTH_ORIGIN}/realms/bwa
+      CLIENT_ID: bwa-app
+      REQUIRE_HTTPS: "true"
     depends_on: [backend]
 
   backend:
@@ -37,9 +39,11 @@ services:
       DB_URL: jdbc:postgresql://app-db:5432/bwa
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
-      KEYCLOAK_ISSUER_URI: ${KEYCLOAK_ISSUER_URI}
-      KEYCLOAK_JWK_SET_URI: ${KEYCLOAK_JWK_SET_URI}
-      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS}
+      # Issuer-Claim wird gegen die oeffentliche Auth-URL geprueft; JWKS intern ueber das
+      # Docker-Netz geholt (kein TLS-Truststore noetig, schneller).
+      KEYCLOAK_ISSUER_URI: ${AUTH_ORIGIN}/realms/bwa
+      KEYCLOAK_JWK_SET_URI: http://keycloak:8080/realms/bwa/protocol/openid-connect/certs
+      CORS_ALLOWED_ORIGINS: ${APP_ORIGIN}
       BWA_KI_PROVIDER: ${BWA_KI_PROVIDER:-ollama}
       OLLAMA_BASE_URL: http://ollama:11434
       OLLAMA_MODEL: ${OLLAMA_MODEL:-llama3.1:8b}
@@ -63,6 +67,19 @@ services:
       timeout: 5s
       retries: 10
 
+  # Rendert den Keycloak-Realm aus dem Template: setzt die echten Login-Redirect-/Web-Origins
+  # (APP_ORIGIN) ein. Laeuft einmalig vor Keycloak.
+  realm-init:
+    image: alpine:3.21
+    container_name: bwa-realm-init
+    command:
+      - sh
+      - -c
+      - 'sed "s|__APP_ORIGIN__|${APP_ORIGIN}|g" /tpl/bwa-realm.template.json > /shared/bwa-realm.json && echo "Realm gerendert fuer Origin: ${APP_ORIGIN}"'
+    volumes:
+      - ./infra/keycloak:/tpl:ro
+      - realm_import:/shared
+
   keycloak:
     image: quay.io/keycloak/keycloak:26.6.3
     container_name: bwa-keycloak
@@ -73,17 +90,19 @@ services:
       KC_DB_URL: jdbc:postgresql://keycloak-db:5432/keycloak
       KC_DB_USERNAME: ${KC_DB_USERNAME}
       KC_DB_PASSWORD: ${KC_DB_PASSWORD}
-      KC_HOSTNAME: ${AUTH_DOMAIN}
+      KC_HOSTNAME: ${AUTH_ORIGIN}
       KC_HTTP_ENABLED: "true"
       KC_PROXY_HEADERS: xforwarded
       KC_HEALTH_ENABLED: "true"
       KC_BOOTSTRAP_ADMIN_USERNAME: ${KC_BOOTSTRAP_ADMIN_USERNAME}
       KC_BOOTSTRAP_ADMIN_PASSWORD: ${KC_BOOTSTRAP_ADMIN_PASSWORD}
     volumes:
-      - ./infra/keycloak/bwa-realm.json:/opt/keycloak/data/import/bwa-realm.json:ro
+      - realm_import:/opt/keycloak/data/import:ro
     depends_on:
       keycloak-db:
         condition: service_healthy
+      realm-init:
+        condition: service_completed_successfully
 
   keycloak-db:
     image: postgres:16-alpine
@@ -115,3 +134,4 @@ volumes:
   app_db_data: {}
   kc_db_data: {}
   ollama_data: {}
+  realm_import: {}

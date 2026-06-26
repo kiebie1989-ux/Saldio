@@ -1,5 +1,0 @@
-{
-  "issuer": "https://auth.127.0.0.1.nip.io:8943/realms/bwa",
-  "clientId": "bwa-app",
-  "requireHttps": true
-}
