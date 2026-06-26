@@ -7,6 +7,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { NgxEchartsDirective } from 'ngx-echarts';
 import type { EChartsCoreOption } from 'echarts/core';
 import { BwaApiService, Mandant, PlanungBericht, Szenario } from '../../core/bwa-api.service';
+import { STANDARD_JAHR, VERFUEGBARE_JAHRE } from '../../core/jahre';
 
 /** Planung & Forecast (Excel-Blatt 09): IST + projizierte Planmonate je Szenario. */
 @Component({
@@ -18,7 +19,8 @@ import { BwaApiService, Mandant, PlanungBericht, Szenario } from '../../core/bwa
 export class Planung {
   private readonly api = inject(BwaApiService);
 
-  protected readonly jahr = 2025;
+  protected readonly jahre = VERFUEGBARE_JAHRE;
+  protected readonly jahr = signal(STANDARD_JAHR);
   protected readonly bisMonat = 9;
   protected readonly szenarien: Szenario[] = ['PESSIMISTISCH', 'BASIS', 'OPTIMISTISCH'];
   protected readonly spalten = ['monat', 'typ', 'umsatz', 'rohertrag', 'ebit'];
@@ -57,9 +59,14 @@ export class Planung {
     this.lade();
   }
 
+  protected onJahrChange(jahr: number): void {
+    this.jahr.set(jahr);
+    this.lade();
+  }
+
   private lade(): void {
     this.api
-      .getPlanung(this.selectedMandant(), this.jahr, this.bisMonat, this.szenario())
+      .getPlanung(this.selectedMandant(), this.jahr(), this.bisMonat, this.szenario())
       .subscribe((b) => this.bericht.set(b));
   }
 }

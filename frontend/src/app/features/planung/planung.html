@@ -10,6 +10,14 @@
       </mat-select>
     </mat-form-field>
     <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Jahr</mat-label>
+      <mat-select [value]="jahr()" (selectionChange)="onJahrChange($event.value)">
+        @for (j of jahre; track j) {
+          <mat-option [value]="j">{{ j }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
       <mat-label>Szenario</mat-label>
       <mat-select [value]="szenario()" (selectionChange)="onSzenarioChange($event.value)">
         @for (s of szenarien; track s) {

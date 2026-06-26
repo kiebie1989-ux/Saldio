@@ -5,6 +5,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { BwaApiService, KostenstrukturBericht, Mandant } from '../../core/bwa-api.service';
+import { STANDARD_JAHR, VERFUEGBARE_JAHRE } from '../../core/jahre';
 
 /** Kostenstruktur (Excel-Blatt 10): Kostenarten je Monat + Lohnsumme je Kostenstelle. */
 @Component({
@@ -16,7 +17,8 @@ import { BwaApiService, KostenstrukturBericht, Mandant } from '../../core/bwa-ap
 export class Kostenstruktur {
   private readonly api = inject(BwaApiService);
 
-  protected readonly jahr = 2025;
+  protected readonly jahre = VERFUEGBARE_JAHRE;
+  protected readonly jahr = signal(STANDARD_JAHR);
   protected readonly artSpalten = ['monat', 'umsatz', 'wareneinsatz', 'weQuote', 'personal', 'persQuote', 'sonstige', 'sonsQuote', 'gesamtkostenquote'];
   protected readonly stelleSpalten = ['kostenstelle', 'personalkosten', 'anteil'];
   protected readonly mandanten = signal<Mandant[]>([]);
@@ -33,7 +35,12 @@ export class Kostenstruktur {
     this.lade();
   }
 
+  protected onJahrChange(jahr: number): void {
+    this.jahr.set(jahr);
+    this.lade();
+  }
+
   private lade(): void {
-    this.api.getKostenstruktur(this.selectedMandant(), this.jahr).subscribe((b) => this.bericht.set(b));
+    this.api.getKostenstruktur(this.selectedMandant(), this.jahr()).subscribe((b) => this.bericht.set(b));
   }
 }

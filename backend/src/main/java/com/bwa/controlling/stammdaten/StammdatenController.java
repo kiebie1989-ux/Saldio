@@ -54,6 +54,42 @@ public class StammdatenController {
                 .toList();
     }
 
+    @org.springframework.web.bind.annotation.PostMapping("/mandanten")
+    public Mandant anlegen(@RequestBody MandantEingabe e) {
+        Mandant m = new Mandant();
+        uebernehmen(m, e);
+        Mandant gespeichert = mandanten.save(m);
+        audit.protokolliere("MANDANT_ANLEGEN", "mandant", e.name(), "DATEV-Nr=" + e.datevMandantennr());
+        return gespeichert;
+    }
+
+    @PutMapping("/mandanten/{id}")
+    public Mandant bearbeiten(@org.springframework.web.bind.annotation.PathVariable Long id,
+                              @RequestBody MandantEingabe e) {
+        Mandant m = mandanten.findById(id).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Mandant nicht gefunden: " + id));
+        uebernehmen(m, e);
+        Mandant gespeichert = mandanten.save(m);
+        audit.protokolliere("MANDANT_AENDERN", "mandant", String.valueOf(id), e.name());
+        return gespeichert;
+    }
+
+    private static void uebernehmen(Mandant m, MandantEingabe e) {
+        m.setName(e.name());
+        m.setStatus(e.status() == null ? "AKTIV" : e.status());
+        m.setImEinzelbericht(e.imEinzelbericht());
+        m.setInKumulierung(e.inKumulierung());
+        m.setImFinalbericht(e.imFinalbericht());
+        m.setTyp(e.typ());
+        m.setBemerkung(e.bemerkung());
+        m.setDatevMandantennr(e.datevMandantennr());
+        m.setDatevBeraternr(e.datevBeraternr());
+    }
+
+    public record MandantEingabe(String name, String status, boolean imEinzelbericht, boolean inKumulierung,
+                                 boolean imFinalbericht, String typ, String bemerkung,
+                                 String datevMandantennr, String datevBeraternr) {}
+
     @GetMapping("/einstellungen")
     public List<Einstellung> einstellungen() {
         return einstellungen.findAll();

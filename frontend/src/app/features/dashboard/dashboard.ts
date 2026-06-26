@@ -8,6 +8,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NgxEchartsDirective } from 'ngx-echarts';
 import type { EChartsCoreOption } from 'echarts/core';
 import { BwaApiService, DashboardBericht, Mandant } from '../../core/bwa-api.service';
+import { STANDARD_JAHR, VERFUEGBARE_JAHRE } from '../../core/jahre';
 
 /** Dashboard mit echten KPI-Kacheln und Monatscharts aus der Engine (Excel-Blatt 04_Dashboard). */
 @Component({
@@ -27,7 +28,8 @@ import { BwaApiService, DashboardBericht, Mandant } from '../../core/bwa-api.ser
 export class Dashboard {
   private readonly api = inject(BwaApiService);
 
-  protected readonly jahr = 2025;
+  protected readonly jahre = VERFUEGBARE_JAHRE;
+  protected readonly jahr = signal(STANDARD_JAHR);
   protected readonly mandanten = signal<Mandant[]>([]);
   protected readonly selectedMandant = signal('Mustermann GmbH');
   protected readonly bericht = signal<DashboardBericht | null>(null);
@@ -60,6 +62,11 @@ export class Dashboard {
     this.ladeDashboard();
   }
 
+  protected onJahrChange(jahr: number): void {
+    this.jahr.set(jahr);
+    this.ladeDashboard();
+  }
+
   protected euro(value: number | undefined): string {
     return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 })
       .format(value ?? 0);
@@ -67,7 +74,7 @@ export class Dashboard {
 
   private ladeDashboard(): void {
     this.laedt.set(true);
-    this.api.getDashboard(this.selectedMandant(), this.jahr).subscribe({
+    this.api.getDashboard(this.selectedMandant(), this.jahr()).subscribe({
       next: (b) => {
         this.bericht.set(b);
         this.laedt.set(false);

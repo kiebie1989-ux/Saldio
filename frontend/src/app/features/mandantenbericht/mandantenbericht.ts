@@ -6,6 +6,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Ampel, BwaApiService, Mandant, Mandantenbericht as Bericht } from '../../core/bwa-api.service';
+import { STANDARD_JAHR, VERFUEGBARE_JAHRE } from '../../core/jahre';
 
 /** Executive-Mandantenbericht: Bereichsanalysen, Managementkommentar und PDF-Export. */
 @Component({
@@ -24,13 +25,14 @@ import { Ampel, BwaApiService, Mandant, Mandantenbericht as Bericht } from '../.
 export class Mandantenbericht {
   private readonly api = inject(BwaApiService);
 
-  protected readonly jahr = 2025;
+  protected readonly jahre = VERFUEGBARE_JAHRE;
+  protected readonly jahr = signal(STANDARD_JAHR);
   protected readonly spalten = ['bereich', 'ampel', 'bewertung', 'massnahme', 'analyse'];
   protected readonly mandanten = signal<Mandant[]>([]);
   protected readonly selectedMandant = signal('Mustermann GmbH');
   protected readonly bericht = signal<Bericht | null>(null);
 
-  protected readonly pdfHref = computed(() => this.api.pdfUrl(this.selectedMandant(), this.jahr));
+  protected readonly pdfHref = computed(() => this.api.pdfUrl(this.selectedMandant(), this.jahr()));
 
   constructor() {
     this.api.getMandanten().subscribe((m) => this.mandanten.set(m));
@@ -39,6 +41,11 @@ export class Mandantenbericht {
 
   protected onMandantChange(name: string): void {
     this.selectedMandant.set(name);
+    this.lade();
+  }
+
+  protected onJahrChange(jahr: number): void {
+    this.jahr.set(jahr);
     this.lade();
   }
 
@@ -51,6 +58,6 @@ export class Mandantenbericht {
   }
 
   private lade(): void {
-    this.api.getMandantenbericht(this.selectedMandant(), this.jahr).subscribe((b) => this.bericht.set(b));
+    this.api.getMandantenbericht(this.selectedMandant(), this.jahr()).subscribe((b) => this.bericht.set(b));
   }
 }

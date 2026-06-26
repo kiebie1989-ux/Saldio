@@ -9,6 +9,14 @@
         }
       </mat-select>
     </mat-form-field>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Jahr</mat-label>
+      <mat-select [value]="jahr()" (selectionChange)="onJahrChange($event.value)">
+        @for (j of jahre; track j) {
+          <mat-option [value]="j">{{ j }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
     <a mat-flat-button color="primary" [href]="pdfHref()" target="_blank">
       <mat-icon>picture_as_pdf</mat-icon> PDF herunterladen
     </a>

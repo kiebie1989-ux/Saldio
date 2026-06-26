@@ -20,4 +20,7 @@ public interface BuchungAggregatRepository extends Repository<Buchung, Long> {
             group by b.monat, b.bwaGruppe
             """)
     List<GruppenSumme> aggregiere(@Param("mandant") String mandant, @Param("jahr") String jahr);
+
+    @Query("select distinct substring(b.monat, 1, 4) from Buchung b where b.mandant = :mandant order by 1 desc")
+    List<String> jahre(@Param("mandant") String mandant);
 }

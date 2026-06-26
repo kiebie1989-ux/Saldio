@@ -24,7 +24,7 @@ import { BwaApiService, ImportErgebnis } from '../../core/bwa-api.service';
 export class ImportSeite {
   private readonly api = inject(BwaApiService);
 
-  protected readonly spalten = ['importiertAm', 'dateiname', 'quelle', 'zeilenGesamt', 'zeilenOk', 'zeilenWarnung', 'status'];
+  protected readonly spalten = ['importiertAm', 'dateiname', 'quelle', 'zeilenGesamt', 'zeilenOk', 'zeilenWarnung', 'status', 'aktion'];
   protected readonly typ = signal<'csv' | 'extf'>('csv');
   protected readonly laedt = signal(false);
   protected readonly letztesErgebnis = signal<ImportErgebnis | null>(null);
@@ -59,6 +59,13 @@ export class ImportSeite {
       },
     });
     input.value = '';
+  }
+
+  protected storniere(id: number): void {
+    this.api.stornoImport(id).subscribe({
+      next: () => this.ladeHistorie(),
+      error: () => {},
+    });
   }
 
   private ladeHistorie(): void {

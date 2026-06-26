@@ -3,6 +3,9 @@ import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { Stammdaten } from './stammdaten';
+import { AuthService } from '../../core/auth.service';
+
+const authStub: Partial<AuthService> = { hasRole: () => true };
 
 describe('Stammdaten', () => {
   let httpMock: HttpTestingController;
@@ -10,7 +13,12 @@ describe('Stammdaten', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [Stammdaten],
-      providers: [provideHttpClient(), provideHttpClientTesting(), provideNoopAnimations()],
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        provideNoopAnimations(),
+        { provide: AuthService, useValue: authStub },
+      ],
     }).compileComponents();
     httpMock = TestBed.inject(HttpTestingController);
   });

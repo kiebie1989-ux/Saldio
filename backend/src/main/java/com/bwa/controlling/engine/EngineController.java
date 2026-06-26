@@ -21,11 +21,13 @@ public class EngineController {
     private final KumuliertService kumuliertService;
     private final PlanungService planungService;
     private final MandantenZugriffService zugriff;
+    private final BuchungAggregatRepository buchungAggregat;
 
     public EngineController(GuvService guvService, BilanzService bilanzService,
                             KennzahlenService kennzahlenService, DashboardService dashboardService,
                             KostenstrukturService kostenstrukturService, KumuliertService kumuliertService,
-                            PlanungService planungService, MandantenZugriffService zugriff) {
+                            PlanungService planungService, MandantenZugriffService zugriff,
+                            BuchungAggregatRepository buchungAggregat) {
         this.guvService = guvService;
         this.bilanzService = bilanzService;
         this.kennzahlenService = kennzahlenService;
@@ -34,6 +36,13 @@ public class EngineController {
         this.kumuliertService = kumuliertService;
         this.planungService = planungService;
         this.zugriff = zugriff;
+        this.buchungAggregat = buchungAggregat;
+    }
+
+    @GetMapping("/jahre")
+    public List<Integer> jahre(@RequestParam String mandant) {
+        zugriff.pruefe(mandant);
+        return buchungAggregat.jahre(mandant).stream().map(Integer::parseInt).toList();
     }
 
     @GetMapping("/guv")

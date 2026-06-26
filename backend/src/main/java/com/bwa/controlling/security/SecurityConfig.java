@@ -62,6 +62,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/benutzer", "/api/benutzer/**").hasRole(ADMIN)
                         .requestMatchers(HttpMethod.POST, "/api/festschreibung").hasRole(ADMIN)
                         .requestMatchers("/api/gobd-export").hasRole(ADMIN)
+                        .requestMatchers(HttpMethod.POST, "/api/mandanten").hasRole(ADMIN)
+                        .requestMatchers(HttpMethod.PUT, "/api/mandanten/**").hasRole(ADMIN)
                         // Schreiboperationen
                         .requestMatchers(HttpMethod.POST, "/api/import", "/api/import/**").hasAnyRole(BEARBEITER, ADMIN)
                         .requestMatchers(HttpMethod.PUT, "/api/einstellungen").hasRole(ADMIN)

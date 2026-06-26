@@ -44,6 +44,16 @@
       <ng-container matColumnDef="zeilenOk"><th mat-header-cell *matHeaderCellDef class="num">OK</th><td mat-cell *matCellDef="let r" class="num">{{ r.zeilenOk }}</td></ng-container>
       <ng-container matColumnDef="zeilenWarnung"><th mat-header-cell *matHeaderCellDef class="num">Warnung</th><td mat-cell *matCellDef="let r" class="num">{{ r.zeilenWarnung }}</td></ng-container>
       <ng-container matColumnDef="status"><th mat-header-cell *matHeaderCellDef>Status</th><td mat-cell *matCellDef="let r">{{ r.status }}</td></ng-container>
+      <ng-container matColumnDef="aktion">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let r">
+          @if (r.quelle !== 'STORNO') {
+            <button mat-button color="warn" (click)="storniere(r.id)">
+              <mat-icon>undo</mat-icon> Stornieren
+            </button>
+          }
+        </td>
+      </ng-container>
       <tr mat-header-row *matHeaderRowDef="spalten"></tr>
       <tr mat-row *matRowDef="let row; columns: spalten"></tr>
     </table>

@@ -10,3 +10,20 @@ table {
 .num {
   text-align: right;
 }
+
+.mandant-form {
+  margin-top: 1.5rem;
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.5rem 1rem;
+    align-items: center;
+  }
+
+  .flags {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+}

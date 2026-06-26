@@ -1,13 +1,23 @@
 <div class="struktur-header">
   <h1>Gewinn- und Verlustrechnung</h1>
-  <mat-form-field appearance="outline" subscriptSizing="dynamic">
-    <mat-label>Mandant</mat-label>
-    <mat-select [value]="selectedMandant()" (selectionChange)="onMandantChange($event.value)">
-      @for (m of mandanten(); track m.id) {
-        <mat-option [value]="m.name">{{ m.name }}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
+  <div class="filter">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Mandant</mat-label>
+      <mat-select [value]="selectedMandant()" (selectionChange)="onMandantChange($event.value)">
+        @for (m of mandanten(); track m.id) {
+          <mat-option [value]="m.name">{{ m.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Jahr</mat-label>
+      <mat-select [value]="jahr()" (selectionChange)="onJahrChange($event.value)">
+        @for (j of jahre; track j) {
+          <mat-option [value]="j">{{ j }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
 </div>
 
 @if (bericht(); as b) {

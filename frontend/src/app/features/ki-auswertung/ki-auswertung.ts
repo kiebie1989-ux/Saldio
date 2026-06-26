@@ -5,6 +5,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { Ampel, BwaApiService, Mandant, Mandantenbericht } from '../../core/bwa-api.service';
+import { STANDARD_JAHR, VERFUEGBARE_JAHRE } from '../../core/jahre';
 
 /** KI-Auswertung: Tiefenanalyse je Bereich mit Ampel und Maßnahme (Excel-Blatt 07_KI_Auswertung). */
 @Component({
@@ -16,7 +17,8 @@ import { Ampel, BwaApiService, Mandant, Mandantenbericht } from '../../core/bwa-
 export class KiAuswertung {
   private readonly api = inject(BwaApiService);
 
-  protected readonly jahr = 2025;
+  protected readonly jahre = VERFUEGBARE_JAHRE;
+  protected readonly jahr = signal(STANDARD_JAHR);
   protected readonly mandanten = signal<Mandant[]>([]);
   protected readonly selectedMandant = signal('Mustermann GmbH');
   protected readonly bericht = signal<Mandantenbericht | null>(null);
@@ -31,6 +33,11 @@ export class KiAuswertung {
     this.lade();
   }
 
+  protected onJahrChange(jahr: number): void {
+    this.jahr.set(jahr);
+    this.lade();
+  }
+
   protected ampelIcon(a: Ampel): string {
     return a === 'GRUEN' ? 'check_circle' : a === 'GELB' ? 'warning' : a === 'ROT' ? 'error' : 'remove';
   }
@@ -40,6 +47,6 @@ export class KiAuswertung {
   }
 
   private lade(): void {
-    this.api.getMandantenbericht(this.selectedMandant(), this.jahr).subscribe((b) => this.bericht.set(b));
+    this.api.getMandantenbericht(this.selectedMandant(), this.jahr()).subscribe((b) => this.bericht.set(b));
   }
 }

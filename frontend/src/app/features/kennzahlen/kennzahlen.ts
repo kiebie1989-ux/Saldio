@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { BwaApiService, Ampel, Kennzahl, Mandant } from '../../core/bwa-api.service';
+import { STANDARD_JAHR, VERFUEGBARE_JAHRE } from '../../core/jahre';
 
 /** Kennzahlen-Übersicht mit Ampelbewertung (Excel-Blatt 05_Kennzahlen). */
 @Component({
@@ -24,7 +25,8 @@ import { BwaApiService, Ampel, Kennzahl, Mandant } from '../../core/bwa-api.serv
 export class Kennzahlen {
   private readonly api = inject(BwaApiService);
 
-  protected readonly jahr = 2025;
+  protected readonly jahre = VERFUEGBARE_JAHRE;
+  protected readonly jahr = signal(STANDARD_JAHR);
   protected readonly spalten = ['name', 'wert', 'zielwert', 'ampel', 'interpretation'];
   protected readonly mandanten = signal<Mandant[]>([]);
   protected readonly selectedMandant = signal('Mustermann GmbH');
@@ -40,6 +42,11 @@ export class Kennzahlen {
     this.lade();
   }
 
+  protected onJahrChange(jahr: number): void {
+    this.jahr.set(jahr);
+    this.lade();
+  }
+
   protected ampelIcon(a: Ampel): string {
     return a === 'GRUEN' ? 'check_circle' : a === 'GELB' ? 'warning' : a === 'ROT' ? 'error' : 'remove';
   }
@@ -49,6 +56,6 @@ export class Kennzahlen {
   }
 
   private lade(): void {
-    this.api.getKennzahlen(this.selectedMandant(), this.jahr).subscribe((k) => this.kennzahlen.set(k));
+    this.api.getKennzahlen(this.selectedMandant(), this.jahr()).subscribe((k) => this.kennzahlen.set(k));
   }
 }

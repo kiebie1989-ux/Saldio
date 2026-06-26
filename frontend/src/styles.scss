@@ -37,3 +37,11 @@ body {
   height: 100%;
 }
 /* You can add global styles to this file, and also import other style files */
+
+/* Filterleiste (Mandant-/Jahr-Auswahl) in den Feature-Seiten */
+.filter {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}

@@ -3,6 +3,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { BwaApiService, Mandant, StrukturBericht } from '../../core/bwa-api.service';
+import { STANDARD_JAHR, VERFUEGBARE_JAHRE } from '../../core/jahre';
 import { StrukturTabelle } from '../../shared/struktur-tabelle';
 
 /** Gewinn- und Verlustrechnung (Excel-Blatt GuV_Struktur). */
@@ -15,7 +16,8 @@ import { StrukturTabelle } from '../../shared/struktur-tabelle';
 export class Guv {
   private readonly api = inject(BwaApiService);
 
-  protected readonly jahr = 2025;
+  protected readonly jahre = VERFUEGBARE_JAHRE;
+  protected readonly jahr = signal(STANDARD_JAHR);
   protected readonly mandanten = signal<Mandant[]>([]);
   protected readonly selectedMandant = signal('Mustermann GmbH');
   protected readonly bericht = signal<StrukturBericht | null>(null);
@@ -37,7 +39,12 @@ export class Guv {
     this.lade();
   }
 
+  protected onJahrChange(jahr: number): void {
+    this.jahr.set(jahr);
+    this.lade();
+  }
+
   private lade(): void {
-    this.api.getGuv(this.selectedMandant(), this.jahr).subscribe((b) => this.bericht.set(b));
+    this.api.getGuv(this.selectedMandant(), this.jahr()).subscribe((b) => this.bericht.set(b));
   }
 }

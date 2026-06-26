@@ -55,4 +55,14 @@ public class Mandant {
     public String getBemerkung() { return bemerkung; }
     public String getDatevMandantennr() { return datevMandantennr; }
     public String getDatevBeraternr() { return datevBeraternr; }
+
+    public void setName(String v) { this.name = v; }
+    public void setStatus(String v) { this.status = v; }
+    public void setImEinzelbericht(boolean v) { this.imEinzelbericht = v; }
+    public void setInKumulierung(boolean v) { this.inKumulierung = v; }
+    public void setImFinalbericht(boolean v) { this.imFinalbericht = v; }
+    public void setTyp(String v) { this.typ = v; }
+    public void setBemerkung(String v) { this.bemerkung = v; }
+    public void setDatevMandantennr(String v) { this.datevMandantennr = v; }
+    public void setDatevBeraternr(String v) { this.datevBeraternr = v; }
 }

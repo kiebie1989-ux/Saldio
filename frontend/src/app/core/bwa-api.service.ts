@@ -11,6 +11,20 @@ export interface Mandant {
   imFinalbericht?: boolean;
   typ?: string;
   bemerkung?: string;
+  datevMandantennr?: string;
+  datevBeraternr?: string;
+}
+
+export interface MandantEingabe {
+  name: string;
+  status: string;
+  imEinzelbericht: boolean;
+  inKumulierung: boolean;
+  imFinalbericht: boolean;
+  typ: string;
+  bemerkung: string;
+  datevMandantennr: string;
+  datevBeraternr: string;
 }
 
 export interface Konto {
@@ -195,6 +209,18 @@ export class BwaApiService {
 
   getKontenrahmen(): Observable<Konto[]> {
     return this.http.get<Konto[]>('/api/kontenrahmen');
+  }
+
+  createMandant(eingabe: MandantEingabe): Observable<Mandant> {
+    return this.http.post<Mandant>('/api/mandanten', eingabe);
+  }
+
+  updateMandant(id: number, eingabe: MandantEingabe): Observable<Mandant> {
+    return this.http.put<Mandant>(`/api/mandanten/${id}`, eingabe);
+  }
+
+  stornoImport(id: number): Observable<ImportErgebnis> {
+    return this.http.post<ImportErgebnis>(`/api/import/${id}/storno`, {});
   }
 
   getMitarbeiter(): Observable<MitarbeiterDto[]> {
