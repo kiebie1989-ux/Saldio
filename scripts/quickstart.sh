@@ -11,7 +11,7 @@ docker compose -f docker-compose.prod.yml -f docker-compose.quickstart.yml --env
 cat <<'EOF'
 
 ============================================================
-  BWA Controlling - Quickstart laeuft.
+  Saldio - Quickstart laeuft.
 
   URL:    https://bwa.127.0.0.1.nip.io:8943
           (Self-signed-Zertifikat -> im Browser einmal bestaetigen.

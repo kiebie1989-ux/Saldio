@@ -3,9 +3,16 @@
   top: 0;
   z-index: 2;
 
+  .app-logo {
+    height: 30px;
+    width: 30px;
+    display: block;
+  }
+
   .app-title {
-    margin-left: 0.5rem;
-    font-weight: 500;
+    margin-left: 0.6rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
   }
 
   .spacer {

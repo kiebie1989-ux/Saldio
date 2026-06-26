@@ -1,4 +1,4 @@
-# Abnahme-Checkliste — DATEV-BWA Controlling
+# Abnahme-Checkliste — Saldio (BWA-Controlling auf DATEV-Basis)
 
 Diese Checkliste führt durch die Abnahme vor dem Produktivgang. Sie deckt **technische** Punkte
 (im Code/Test belegbar) und **organisatorische** Punkte (durch Steuerberater/Betreiber zu erfüllen).

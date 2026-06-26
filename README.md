@@ -1,6 +1,12 @@
-# BWA Controlling
+<p align="center">
+  <img src="frontend/public/logo.svg" alt="Saldio" width="84" height="84" />
+</p>
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+<h1 align="center">Saldio</h1>
+
+<p align="center">
+  <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue.svg" /></a>
+</p>
 
 Self-hosted controlling & reporting tool for German *Betriebswirtschaftliche Auswertung* (BWA)
 on a DATEV basis (SKR03/SKR04). Multi-tenant, with profit-&-loss / balance-sheet aggregation,

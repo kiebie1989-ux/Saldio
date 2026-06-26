@@ -24,7 +24,7 @@ import { AuthService } from './core/auth.service';
   styleUrl: './app.scss',
 })
 export class App {
-  protected readonly title = 'DATEV-BWA Controlling';
+  protected readonly title = 'Saldio';
   protected readonly auth = inject(AuthService);
 
   /** Nur Navigationseinträge zeigen, für die der Benutzer die Rolle besitzt. */

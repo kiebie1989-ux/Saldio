@@ -15,8 +15,8 @@
     <artifactId>controlling-backend</artifactId>
     <version>0.1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>DATEV-BWA Controlling Backend</name>
-    <description>Backend des DATEV-BWA-Controlling-Werkzeugs: Import (CSV/EXTF), GuV-/Bilanz-Engine,
+    <name>Saldio Backend</name>
+    <description>Backend von Saldio (BWA-Controlling auf DATEV-Basis): Import (CSV/EXTF), GuV-/Bilanz-Engine,
         Kennzahlen, GoBD-Revisionssicherheit (Audit-Trail, Festschreibung), PDF-Export und
         Multi-Provider-KI-Auswertung.</description>
     <url>https://github.com/erkikiebel/bwa-controlling</url>

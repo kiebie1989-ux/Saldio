@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- Brand identity: project named **Saldio**, with an SVG logo and favicon (`frontend/public/logo.svg`,
+  `favicon.svg`) and the app title/tab set accordingly.
 - Open-source release readiness: MIT `LICENSE`, `THIRD-PARTY-NOTICES.md`, contributing/security/
   conduct docs, issue & PR templates, bilingual README.
 - One-command **Quickstart** (`scripts/quickstart.sh`): self-signed TLS, demo logins, demo data.

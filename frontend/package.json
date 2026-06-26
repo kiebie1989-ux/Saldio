@@ -1,7 +1,7 @@
 {
-  "name": "bwa-controlling-frontend",
+  "name": "saldio-frontend",
   "version": "0.1.0",
-  "description": "Angular-Frontend des DATEV-BWA-Controlling-Werkzeugs (Dashboard, GuV/Bilanz, Kennzahlen, Mandantenbericht, KI-Auswertung).",
+  "description": "Angular-Frontend von Saldio (BWA-Controlling auf DATEV-Basis): Dashboard, GuV/Bilanz, Kennzahlen, Mandantenbericht, KI-Auswertung.",
   "license": "MIT",
   "author": "Erik Kiebel",
   "repository": {

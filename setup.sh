@@ -24,7 +24,7 @@ ask() { # ask VAR "Prompt" ["default"]
   printf -v "$__var" '%s' "${__in:-$__def}"
 }
 
-echo "== BWA Controlling – Produktiv-Setup =="
+echo "== Saldio – Produktiv-Setup =="
 ask APP_DOMAIN  "App-Domain (z.B. bwa.example.com)"
 ask AUTH_DOMAIN "Auth-Domain/Keycloak (z.B. auth.example.com)"
 ask KC_ADMIN    "Keycloak-Admin-Benutzername" "admin"
