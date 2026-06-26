@@ -60,10 +60,24 @@ cd Saldio
 ./scripts/quickstart.sh
 ```
 
-Open **https://bwa.127.0.0.1.nip.io:8943** (accept the self-signed cert; also open
-`https://auth.127.0.0.1.nip.io:8943` once and accept it). Demo logins: `admin/admin`, `leser/leser`.
+The Quickstart uses a **self-signed certificate**, so you must trust **both** domains once —
+in this order (always use the full URL incl. `https://` **and** `:8943`):
+
+1. **Trust the auth domain first** — open this URL and accept the warning ("Advanced" → "proceed")
+   until the JSON shows: `https://auth.127.0.0.1.nip.io:8943/realms/bwa/.well-known/openid-configuration`
+   *(Skipping this → "server not available" and login fails — the app loads the OIDC discovery
+   document from this domain via a background request that silently fails on an untrusted cert.)*
+2. **Open the app** (accept its warning too): **https://bwa.127.0.0.1.nip.io:8943**
+
+Demo logins: `admin/admin` (full access), `leser/leser` (read-only).
+
+Der Quickstart nutzt ein **self-signed Zertifikat** — daher **beide** Domains einmal in dieser
+Reihenfolge bestätigen (immer die volle URL mit `https://` **und** `:8943`): zuerst die **auth**-Domain
+oben öffnen und die Warnung bestätigen, dann die App. Ohne den auth-Schritt scheitert der Login.
 
 > Demo only — do not expose to the internet. `nip.io` resolves to `127.0.0.1`.
+> A real deployment with your own domain gets a valid Let's-Encrypt certificate (no warnings, no manual trusting).
+> Echter Betrieb mit eigener Domain erhält ein gültiges Let's-Encrypt-Zertifikat — dann entfällt das Bestätigen.
 
 ## Production deployment (eigene Domain / your own domain)
 
