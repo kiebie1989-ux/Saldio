@@ -38,8 +38,8 @@ GoBD-Bausteinen (append-only Buchungen, Audit-Trail, Festschreibung).
 Requires Docker + Docker Compose. One command, runs locally with a self-signed certificate and demo data:
 
 ```bash
-git clone https://github.com/erkikiebel/bwa-controlling.git
-cd bwa-controlling
+git clone https://github.com/kiebie1989-ux/Saldio.git
+cd Saldio
 ./scripts/quickstart.sh
 ```
 

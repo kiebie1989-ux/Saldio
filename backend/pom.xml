@@ -19,7 +19,7 @@
     <description>Backend von Saldio (BWA-Controlling auf DATEV-Basis): Import (CSV/EXTF), GuV-/Bilanz-Engine,
         Kennzahlen, GoBD-Revisionssicherheit (Audit-Trail, Festschreibung), PDF-Export und
         Multi-Provider-KI-Auswertung.</description>
-    <url>https://github.com/erkikiebel/bwa-controlling</url>
+    <url>https://github.com/kiebie1989-ux/Saldio</url>
 
     <licenses>
         <license>
@@ -36,9 +36,9 @@
     </developers>
 
     <scm>
-        <connection>scm:git:https://github.com/erkikiebel/bwa-controlling.git</connection>
-        <developerConnection>scm:git:https://github.com/erkikiebel/bwa-controlling.git</developerConnection>
-        <url>https://github.com/erkikiebel/bwa-controlling</url>
+        <connection>scm:git:https://github.com/kiebie1989-ux/Saldio.git</connection>
+        <developerConnection>scm:git:https://github.com/kiebie1989-ux/Saldio.git</developerConnection>
+        <url>https://github.com/kiebie1989-ux/Saldio</url>
     </scm>
 
     <properties>
