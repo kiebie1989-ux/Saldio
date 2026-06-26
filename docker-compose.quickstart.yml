@@ -10,9 +10,11 @@
 #   - demo-seed lädt Beispieldaten (Mandanten/Mitarbeiter) in die App-DB
 services:
   caddy:
+    # Standard-Ports 80/443 -> portlose URL https://bwa.127.0.0.1.nip.io.
+    # Bei belegtem 443 in .env.quickstart HTTP_PORT/HTTPS_PORT + die *_ORIGIN-Werte anpassen.
     ports: !override
-      - "8980:80"
-      - "8943:443"
+      - "${HTTP_PORT:-80}:80"
+      - "${HTTPS_PORT:-443}:443"
     volumes: !override
       - ./infra/caddy/Caddyfile.local-test:/etc/caddy/Caddyfile:ro
       - caddy_data:/data

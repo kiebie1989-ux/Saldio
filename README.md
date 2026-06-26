@@ -60,21 +60,23 @@ cd Saldio
 ./scripts/quickstart.sh
 ```
 
-The Quickstart uses a **self-signed certificate**, so you must trust **both** domains once —
-in this order (always use the full URL incl. `https://` **and** `:8943`):
+The Quickstart uses a **self-signed certificate**, so you must trust **both** domains once, in this order:
 
 1. **Trust the auth domain first** — open this URL and accept the warning ("Advanced" → "proceed")
-   until the JSON shows: `https://auth.127.0.0.1.nip.io:8943/realms/bwa/.well-known/openid-configuration`
+   until the JSON shows: `https://auth.127.0.0.1.nip.io/realms/bwa/.well-known/openid-configuration`
    *(Skipping this → "server not available" and login fails — the app loads the OIDC discovery
    document from this domain via a background request that silently fails on an untrusted cert.)*
-2. **Open the app** (accept its warning too): **https://bwa.127.0.0.1.nip.io:8943**
+2. **Open the app** (accept its warning too): **https://bwa.127.0.0.1.nip.io**
 
 Demo logins: `admin/admin` (full access), `leser/leser` (read-only).
 
 Der Quickstart nutzt ein **self-signed Zertifikat** — daher **beide** Domains einmal in dieser
-Reihenfolge bestätigen (immer die volle URL mit `https://` **und** `:8943`): zuerst die **auth**-Domain
-oben öffnen und die Warnung bestätigen, dann die App. Ohne den auth-Schritt scheitert der Login.
+Reihenfolge bestätigen: zuerst die **auth**-Domain oben öffnen und die Warnung bestätigen, dann die App.
+Ohne den auth-Schritt scheitert der Login.
 
+> Ports 80/443 must be free. If they are taken, set `HTTP_PORT`/`HTTPS_PORT` and the `*_ORIGIN`
+> values in `.env.quickstart` (e.g. `:8943`) — the start script then prints the matching URLs.
+>
 > Demo only — do not expose to the internet. `nip.io` resolves to `127.0.0.1`.
 > A real deployment with your own domain gets a valid Let's-Encrypt certificate (no warnings, no manual trusting).
 > Echter Betrieb mit eigener Domain erhält ein gültiges Let's-Encrypt-Zertifikat — dann entfällt das Bestätigen.

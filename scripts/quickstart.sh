@@ -5,24 +5,27 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
+# URLs aus der Quickstart-Konfig lesen, damit der Hinweis immer zur eingestellten
+# Port-/Origin-Variante passt.
+set -a; . ./.env.quickstart; set +a
+
 echo "==> Baue und starte den Quickstart-Stack (das erste Mal dauert es einige Minuten)..."
 docker compose -f docker-compose.prod.yml -f docker-compose.quickstart.yml --env-file .env.quickstart up -d --build
 
-cat <<'EOF'
+cat <<EOF
 
 ============================================================
   Saldio - Quickstart laeuft.
 
   Self-signed-TLS: BEIDE Zertifikate einmal akzeptieren - in DIESER Reihenfolge.
-  Die vollstaendige URL inkl. https:// UND :8943 verwenden.
 
   1) Auth-Zertifikat akzeptieren - diese URL oeffnen und die Warnung bestaetigen
      ("Erweitert" -> "fortfahren"), bis das JSON erscheint:
-        https://auth.127.0.0.1.nip.io:8943/realms/bwa/.well-known/openid-configuration
+        ${AUTH_ORIGIN}/realms/bwa/.well-known/openid-configuration
      OHNE diesen Schritt: "Server nicht verfuegbar" und Login schlaegt fehl.
 
   2) App oeffnen (Zertifikatswarnung ebenfalls bestaetigen):
-        https://bwa.127.0.0.1.nip.io:8943
+        ${APP_ORIGIN}
 
   Logins: admin / admin  (Vollzugriff)   ·   leser / leser  (nur lesen)
 
