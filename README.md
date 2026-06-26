@@ -1,120 +1,101 @@
-# DATEV-BWA Controlling
+# BWA Controlling
 
-Moderne Ablösung der Excel-Mappe `DATEV_BWA_Reporting_Master.xlsx` — ein Controlling-Werkzeug
-für Steuerberater zur monatlichen Betriebswirtschaftlichen Auswertung (BWA) mehrerer Mandanten
-auf DATEV-Basis (SKR03/SKR04).
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+Self-hosted controlling & reporting tool for German *Betriebswirtschaftliche Auswertung* (BWA)
+on a DATEV basis (SKR03/SKR04). Multi-tenant, with profit-&-loss / balance-sheet aggregation,
+KPIs with traffic-light thresholds, an executive dashboard, PDF reports, optional self-hosted
+AI commentary, and GoBD-grade audit features (append-only bookings, audit trail, period sealing).
+
+Selbstgehostetes Controlling-/Reporting-Werkzeug für die deutsche Betriebswirtschaftliche
+Auswertung (BWA) auf DATEV-Basis (SKR03/SKR04). Mehrmandantenfähig, mit GuV-/Bilanz-Aggregation,
+Kennzahlen mit Ampellogik, Dashboard, PDF-Berichten, optionaler self-hosted KI-Auswertung und
+GoBD-Bausteinen (append-only Buchungen, Audit-Trail, Festschreibung).
+
+> ⚠️ The technical GoBD controls do not by themselves make an installation legally GoBD-compliant —
+> organisational measures and professional/legal sign-off are required. See `docs/abnahme-checkliste.md`.
+> Die technischen GoBD-Kontrollen allein stellen keine rechtliche GoBD-Konformität her;
+> dafür sind organisatorische Maßnahmen und eine fachliche/juristische Abnahme nötig.
+
+<!-- Screenshots: bitte hier Dashboard- und Bericht-Screenshots einfügen / add dashboard & report screenshots here -->
+
+## Features
+
+- **Import**: DATEV (vereinfachtes CSV und EXTF-Buchungsstapel), Doppel-Import-Schutz, Storno statt Löschen.
+- **Engine**: GuV, Bilanz, Zwischensummen, Kennzahlen mit Ampel, Dashboard, Kostenstruktur, Kumulierung, Forecast.
+- **Reports**: Mandantenbericht, PDF-Export, optionale KI-Auswertung (self-hosted via Ollama; OpenAI-kompatibel optional).
+- **Auth**: OIDC via Keycloak, Rollen `admin/bearbeiter/leser`, mandantenscharfe Datentrennung.
+- **GoBD**: append-only Buchungen (DB-Trigger), Audit-Trail, Festschreibung mit Hash-Kette, GoBD-Export.
+
+## Quickstart (zum Ausprobieren / try it out)
+
+Requires Docker + Docker Compose. One command, runs locally with a self-signed certificate and demo data:
+
+```bash
+git clone https://github.com/erkikiebel/bwa-controlling.git
+cd bwa-controlling
+./scripts/quickstart.sh
+```
+
+Open **https://bwa.127.0.0.1.nip.io:8943** (accept the self-signed cert; also open
+`https://auth.127.0.0.1.nip.io:8943` once and accept it). Demo logins: `admin/admin`, `leser/leser`.
+
+> Demo only — do not expose to the internet. `nip.io` resolves to `127.0.0.1`.
+
+## Production deployment (eigene Domain / your own domain)
+
+Requires two DNS records (app + auth) pointing at the host and ports 80/443 open. Caddy obtains
+Let's-Encrypt certificates automatically.
+
+```bash
+./setup.sh                                 # asks for domains, generates secrets, writes .env
+./scripts/check-env.sh                      # validates .env
+docker compose -f docker-compose.prod.yml --env-file .env up -d --build
+```
+
+Then create your first app admin in the Keycloak admin console (`https://<auth-domain>/admin`,
+realm `bwa`, role `admin`). Details: [`docs/betrieb.md`](docs/betrieb.md).
 
 ## Stack
 
-| Schicht | Technologie |
+| Layer | Technology |
 |---|---|
-| Backend | Java 21, Spring Boot 3.4, JPA/Hibernate, Flyway |
-| Datenbank | PostgreSQL 16 |
-| Frontend | Angular 22, Angular Material, ngx-echarts (ECharts) |
-| KI | Spring AI (Multi-Provider: Ollama lokal, OpenAI-kompatibel/OpenRouter/DeepSeek/Anthropic) |
-| Tests | JUnit 5, Testcontainers, AssertJ (Backend); Vitest/jsdom (Frontend) |
+| Backend | Java 21, Spring Boot 3.4, JPA/Hibernate, Flyway, Spring AI |
+| Database | PostgreSQL 16 |
+| Frontend | Angular 22, Angular Material, ECharts |
+| Auth | Keycloak (OIDC) |
+| Reverse proxy / TLS | Caddy (automatic HTTPS) |
+| AI (optional) | Ollama (self-hosted) |
 
-## Projektstruktur
-
-```
-backend/            Spring-Boot-Anwendung (package-by-feature: stammdaten, imports, engine, report, ki, api)
-frontend/           Angular-Workspace (Feature-Routen je Excel-Blatt)
-docker-compose.yml  Lokales PostgreSQL für die Entwicklung
-poc-datev-import/   PoC-Gate: DATEV-CSV/EXTF-Import -> Postgres (bewiesen)
-poc-llm/            PoC-Gate: Spring-AI Multi-Provider-LLM (gegen Ollama bewiesen)
-```
-
-## Lokal starten
+## Development
 
 ```bash
-# 1. Datenbank
-docker compose up -d postgres
-
-# 2. Backend (http://localhost:8080)
-cd backend && mvn spring-boot:run
-
-# 3. Frontend (http://localhost:4200, /api -> :8080 via Proxy)
-cd frontend && npm install && npx ng serve
+docker compose up -d postgres keycloak     # dev dependencies
+cd backend && mvn spring-boot:run          # http://localhost:8080
+cd frontend && npm install && npx ng serve # http://localhost:4200
 ```
 
 ## Tests
 
 ```bash
-# Backend (Unit + Integration via Testcontainers; benötigt laufendes Docker)
-cd backend && mvn verify
-
-# Frontend
-cd frontend && npx ng test --watch=false
+cd backend && mvn verify                    # 17 unit + 65 integration (Testcontainers, needs Docker)
+cd frontend && npx ng test --watch=false    # 23 component tests
+./scripts/e2e.sh                            # Playwright E2E (real Keycloak login)
 ```
 
-> Hinweis: In Umgebungen mit sehr neuem Docker-Daemon benötigt Testcontainers
-> `-Dapi.version=1.43` — bereits fest in der Surefire-/Failsafe-Konfiguration hinterlegt.
+## Documentation
 
-## Roadmap
+- [`docs/betrieb.md`](docs/betrieb.md) — operations / Betrieb (deutsch)
+- [`docs/abnahme-checkliste.md`](docs/abnahme-checkliste.md) — acceptance checklist / Abnahme
+- [`docs/verfahrensdokumentation.md`](docs/verfahrensdokumentation.md) — GoBD process docs
+- [`docs/security-review.md`](docs/security-review.md) — security review
 
-- **P0 PoC-Gate** ✅ DATEV-Import + Multi-Provider-LLM bewiesen
-- **P1 Skelett** ✅ Backend + Frontend + CI + Health-E2E
-- **P2 Stammdaten & Import** ✅ Kontenrahmen, Mandanten, Einstellungen, Mitarbeiter; CSV + EXTF
-- **P3 Engine GuV + Bilanz** ✅ monatliche Aggregation + Zwischensummen, gegen Excel-Golden-Values verifiziert
-- **P4 Kennzahlen + Ampel + Dashboard** ✅ 11 BWA-Ratios mit Ampel, Dashboard-Aggregat; Frontend-Dashboard + Kennzahlen-Seite mit echten Daten
-- **P5 Mandantenbericht + KI-Auswertung + PDF** ✅ Multi-Provider-KI (Spring AI, Ollama live) + regelbasiertes Fallback, PDF-Export (Flying Saucer); Frontend Mandantenbericht + KI-Auswertung
-- **P6 Kumuliert/Final + Planung/Forecast + Kostenstruktur** ✅ mandantenübergreifende Aggregation, Szenario-Forecast, Kostenarten/-stellen; drei Frontend-Seiten
+## License
 
-## Authentifizierung / Mehrbenutzer ✅
+[MIT](LICENSE). Third-party components retain their own licenses — see
+[`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md). No GPL/AGPL dependencies.
 
-OIDC via **Keycloak** (Apache-2.0; Zitadel wegen AGPL-3.0 verworfen). Backend = OAuth2-Resource-Server, Rollen `admin/bearbeiter/leser`.
-- ✅ PoC-Gate: echter Keycloak-Token-Flow (Login → JWKS-Validierung → Rollen-Mapping → `hasRole`).
-- ✅ A — alle `/api/**` rollenbasiert abgesichert (Leser liest, Bearbeiter importiert, Admin ändert Einstellungen/Benutzer).
-- ✅ C — Frontend-Login (`angular-oauth2-oidc`): Login-Redirect, Route-Guards, automatischer Bearer-Interceptor, Login/Logout im Header, rollenabhängige Navigation.
-- ✅ B — Mandanten-Datentrennung je Benutzer (am `sub`-Claim): secure-by-default, Admin weist Mandanten über die Seite „Benutzer & Zugriff" zu; alle mandantenbezogenen Endpunkte und Listen werden gefiltert/geprüft.
+## Contributing
 
-Keycloak lokal: `docker compose up -d keycloak` (Konsole :8081, Seed-User `admin/admin` & `leser/leser`).
-**Hinweis:** Mit aktivem Frontend-Login muss Keycloak für die lokale Entwicklung laufen — sonst leitet die App beim Start zum (nicht erreichbaren) Login.
-
-## Tests
-
-```bash
-cd backend && mvn verify          # 17 Unit + 65 Integration (Testcontainers)
-cd frontend && npx ng test --watch=false   # 23 Komponententests (Vitest)
-./scripts/e2e.sh                  # Playwright-E2E: echter Keycloak-Login + Navigation (freie Ports 8081/55432/18080/14200)
-```
-
-## Produktionsreife (Phasen A–F)
-
-Aufbauend auf P0–P6 + Auth wurde das System für den On-Prem-Echtbetrieb gehärtet:
-
-- **A — Fachliche Korrektheit** ✅ EXTF-Mandantennummer→Name, vorzeichenrichtige Soll/Haben-Logik
-  (`BetragsLogik`), Doppel-Import-Schutz (Hash), gehärteter EXTF-Parser.
-- **B — GoBD-Revisionssicherheit** ✅ Buchungen append-only (DB-Trigger), lückenloser Audit-Trail,
-  Festschreibung mit SHA-256-Hash-Kette, Storno statt Delete, GoBD-Export, Verfahrensdokumentation.
-- **C — Sicherheit & Härtung** ✅ Prod-Keycloak (Brute-Force, kurze Tokens), Security-Header, CORS,
-  Secrets externalisiert (kein Default-Passwort im Prod-Profil), Frontend-Runtime-Config.
-- **D — Deployment** ✅ `docker-compose.prod.yml` (Caddy/TLS · Keycloak+DB · App-DB · Backend ·
-  Frontend · Ollama), Container-Images (non-root), Backup-Skript, Betriebsdoku.
-- **E — UX/Vollständigkeit** ✅ Jahresauswahl (datengetrieben), globale Fehlerbehandlung,
-  Stammdaten-CRUD im UI, Import-Storno, Lokalisierung `de-DE`.
-- **F — QS & Abnahme** ✅ Performancetest (7.200 Buchungen, GuV-Aggregation ~12 ms), Security-Review,
-  erweiterte E2E, Abnahme-Checkliste.
-
-Dokumente: [`docs/abnahme-checkliste.md`](docs/abnahme-checkliste.md) ·
-[`docs/verfahrensdokumentation.md`](docs/verfahrensdokumentation.md) ·
-[`docs/security-review.md`](docs/security-review.md) · [`docs/betrieb.md`](docs/betrieb.md).
-
-> **GoBD-Hinweis:** Der Code liefert die *technischen* Kontrollen. Die *formale* GoBD-Konformität
-> erfordert zusätzlich organisatorische Maßnahmen und eine juristische/steuerliche Abnahme
-> (siehe Abnahme-Checkliste, Abschnitt 2).
-
-## Status & Restpunkte
-
-P0–P6, die komplette Authentifizierung (Keycloak/OIDC, Rollen, Mandanten-Datentrennung), alle 13
-Feature-Routen und die Produktionshärtung A–F sind umgesetzt und getestet — inklusive Playwright-E2E
-über den echten Login. Vor dem Echtbetrieb sind die ⚙️-Punkte der Abnahme-Checkliste zu
-konfigurieren (Domain/Zertifikat, echte Secrets, CSP, Backup-Restore-Probe).
-
-- **DATEV-EXTF:** Parser gehärtet (Format-/Kategorie-Validierung, UTF-8-BOM, namensbasiertes, reihenfolge-unabhängiges Spalten-Mapping) und breit getestet. Restkaveat: die kanonische Spaltenliste je Formatversion ist proprietäre, zugangsbeschränkte DATEV-Doku — durch das namensbasierte Mapping aber unkritisch; bei Bedarf gegen die offizielle Schnittstellenbeschreibung abgleichen.
-- **Cloud-LLM:** OpenAI-kompatibler Pfad (OpenRouter/OpenAI/DeepSeek) gegen einen Mock-Server verifiziert (Request/Response, Auth-Header). Ein echter Cloud-Call braucht nur einen Key:
-  ```bash
-  BWA_KI_PROVIDER=openrouter OPENAI_API_KEY=sk-or-... OPENAI_MODEL=... \
-    java -jar backend/target/controlling-backend-0.1.0-SNAPSHOT.jar
-  ```
-  Für belastbare KI-Texte ein stärkeres Modell als das lokale 1B wählen.
+See [`CONTRIBUTING.md`](CONTRIBUTING.md) and [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md).
+Security issues: [`SECURITY.md`](SECURITY.md).
