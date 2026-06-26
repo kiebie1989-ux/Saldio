@@ -34,4 +34,11 @@ class ImportControllerIT extends AbstractPostgresIT {
                 .andExpect(jsonPath("$.zeilenOk").value(6))
                 .andExpect(jsonPath("$.status").value("OK"));
     }
+
+    @Test
+    void ungueltigerTypErgibt400() throws Exception {
+        MockMultipartFile file = new MockMultipartFile("datei", "x.txt", "text/plain", new byte[] {1});
+        mockMvc.perform(multipart("/api/import").file(file).param("typ", "xml").with(TestAuth.bearbeiter()))
+                .andExpect(status().isBadRequest());
+    }
 }

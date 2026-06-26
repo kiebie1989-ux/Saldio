@@ -86,6 +86,8 @@ public class ImportService {
 
         int ok = 0;
         int warnung = 0;
+        // Memo: Festschreibungs-Prüfung nur einmal je Periode statt pro Zeile (Skalierung).
+        java.util.Map<String, Boolean> gesperrt = new java.util.HashMap<>();
         List<Buchung> buchungen = new ArrayList<>(rohzeilen.size());
         for (RohBuchung roh : rohzeilen) {
             Buchung b = new Buchung();
@@ -112,7 +114,9 @@ public class ImportService {
             b.setMandant(mandant);
 
             // Schreibsperre: in eine festgeschriebene Periode darf nicht mehr gebucht werden.
-            if (festschreibung.istFestgeschrieben(mandant, roh.monat())) {
+            final String periode = mandant + "|" + roh.monat();
+            final String finalMandant = mandant;
+            if (gesperrt.computeIfAbsent(periode, k -> festschreibung.istFestgeschrieben(finalMandant, roh.monat()))) {
                 throw new ResponseStatusException(HttpStatus.CONFLICT,
                         "Periode ist festgeschrieben: " + mandant + " " + roh.monat());
             }

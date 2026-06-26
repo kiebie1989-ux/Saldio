@@ -74,14 +74,42 @@ Keycloak lokal: `docker compose up -d keycloak` (Konsole :8081, Seed-User `admin
 ## Tests
 
 ```bash
-cd backend && mvn verify          # 13 Unit + 44 Integration (Testcontainers)
-cd frontend && npx ng test --watch=false   # 21 Komponententests (Vitest)
-./scripts/e2e.sh                  # Playwright-E2E: echter Keycloak-Login (freie Ports 8081/55432/18080/14200)
+cd backend && mvn verify          # 17 Unit + 65 Integration (Testcontainers)
+cd frontend && npx ng test --watch=false   # 23 Komponententests (Vitest)
+./scripts/e2e.sh                  # Playwright-E2E: echter Keycloak-Login + Navigation (freie Ports 8081/55432/18080/14200)
 ```
+
+## Produktionsreife (Phasen A–F)
+
+Aufbauend auf P0–P6 + Auth wurde das System für den On-Prem-Echtbetrieb gehärtet:
+
+- **A — Fachliche Korrektheit** ✅ EXTF-Mandantennummer→Name, vorzeichenrichtige Soll/Haben-Logik
+  (`BetragsLogik`), Doppel-Import-Schutz (Hash), gehärteter EXTF-Parser.
+- **B — GoBD-Revisionssicherheit** ✅ Buchungen append-only (DB-Trigger), lückenloser Audit-Trail,
+  Festschreibung mit SHA-256-Hash-Kette, Storno statt Delete, GoBD-Export, Verfahrensdokumentation.
+- **C — Sicherheit & Härtung** ✅ Prod-Keycloak (Brute-Force, kurze Tokens), Security-Header, CORS,
+  Secrets externalisiert (kein Default-Passwort im Prod-Profil), Frontend-Runtime-Config.
+- **D — Deployment** ✅ `docker-compose.prod.yml` (Caddy/TLS · Keycloak+DB · App-DB · Backend ·
+  Frontend · Ollama), Container-Images (non-root), Backup-Skript, Betriebsdoku.
+- **E — UX/Vollständigkeit** ✅ Jahresauswahl (datengetrieben), globale Fehlerbehandlung,
+  Stammdaten-CRUD im UI, Import-Storno, Lokalisierung `de-DE`.
+- **F — QS & Abnahme** ✅ Performancetest (7.200 Buchungen, GuV-Aggregation ~12 ms), Security-Review,
+  erweiterte E2E, Abnahme-Checkliste.
+
+Dokumente: [`docs/abnahme-checkliste.md`](docs/abnahme-checkliste.md) ·
+[`docs/verfahrensdokumentation.md`](docs/verfahrensdokumentation.md) ·
+[`docs/security-review.md`](docs/security-review.md) · [`docs/betrieb.md`](docs/betrieb.md).
+
+> **GoBD-Hinweis:** Der Code liefert die *technischen* Kontrollen. Die *formale* GoBD-Konformität
+> erfordert zusätzlich organisatorische Maßnahmen und eine juristische/steuerliche Abnahme
+> (siehe Abnahme-Checkliste, Abschnitt 2).
 
 ## Status & Restpunkte
 
-P0–P6, die komplette Authentifizierung (Keycloak/OIDC, Rollen, Mandanten-Datentrennung) und alle 13 Feature-Routen sind umgesetzt und getestet — inklusive Playwright-E2E über den echten Login.
+P0–P6, die komplette Authentifizierung (Keycloak/OIDC, Rollen, Mandanten-Datentrennung), alle 13
+Feature-Routen und die Produktionshärtung A–F sind umgesetzt und getestet — inklusive Playwright-E2E
+über den echten Login. Vor dem Echtbetrieb sind die ⚙️-Punkte der Abnahme-Checkliste zu
+konfigurieren (Domain/Zertifikat, echte Secrets, CSP, Backup-Restore-Probe).
 
 - **DATEV-EXTF:** Parser gehärtet (Format-/Kategorie-Validierung, UTF-8-BOM, namensbasiertes, reihenfolge-unabhängiges Spalten-Mapping) und breit getestet. Restkaveat: die kanonische Spaltenliste je Formatversion ist proprietäre, zugangsbeschränkte DATEV-Doku — durch das namensbasierte Mapping aber unkritisch; bei Bedarf gegen die offizielle Schnittstellenbeschreibung abgleichen.
 - **Cloud-LLM:** OpenAI-kompatibler Pfad (OpenRouter/OpenAI/DeepSeek) gegen einen Mock-Server verifiziert (Request/Response, Auth-Header). Ein echter Cloud-Call braucht nur einen Key:

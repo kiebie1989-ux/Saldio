@@ -30,7 +30,13 @@ public class ImportController {
     @PostMapping(value = "/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ImportErgebnis importieren(@RequestParam("typ") String typ,
                                       @RequestParam("datei") MultipartFile datei) {
-        ImportService.Quelle quelle = ImportService.Quelle.valueOf(typ.toUpperCase(Locale.ROOT));
+        ImportService.Quelle quelle;
+        try {
+            quelle = ImportService.Quelle.valueOf(typ.toUpperCase(Locale.ROOT));
+        } catch (IllegalArgumentException e) {
+            throw new org.springframework.web.server.ResponseStatusException(
+                    org.springframework.http.HttpStatus.BAD_REQUEST, "Unbekannter Import-Typ: " + typ);
+        }
         try {
             ImportBatch batch = importService.importieren(quelle, datei.getOriginalFilename(), datei.getInputStream());
             return ImportErgebnis.von(batch);
