@@ -25,5 +25,8 @@ public abstract class AbstractPostgresIT {
         registry.add("spring.datasource.url", POSTGRES::getJdbcUrl);
         registry.add("spring.datasource.username", POSTGRES::getUsername);
         registry.add("spring.datasource.password", POSTGRES::getPassword);
+        // Produktiv-Migrationen enthalten keine Demo-Stammdaten mehr; für Tests wird der Demo-Seed
+        // (db/testseed, nur im Test-Classpath) zusätzlich geladen, damit die ITs Beispieldaten haben.
+        registry.add("spring.flyway.locations", () -> "classpath:db/migration,classpath:db/testseed");
     }
 }
